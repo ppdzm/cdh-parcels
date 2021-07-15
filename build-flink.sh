@@ -134,7 +134,7 @@ function build_csd() {
   sed -i -e "s/%CDH_MAX%/$CDH_MAX/" ${CSD_BUILD_PATH}/descriptor/service.sdl
   sed -i -e "s/%SERVICE_NAME_LOWER%/$SERVICE_NAME_LOWER/" ${CSD_BUILD_PATH}/scripts/control.sh
   java -jar cm_ext/validator/target/validator.jar -s ${CSD_BUILD_PATH}/descriptor/service.sdl -l "SPARK_ON_YARN SPARK2_ON_YARN"
-  jar -cvf "target/$JARNAME" -C ${CSD_BUILD_PATH} .
+  jar -cvf "csd-build/$JARNAME" -C ${CSD_BUILD_PATH} .
 }
 
 function build_csd_standalone() {
@@ -153,7 +153,7 @@ function build_csd_standalone() {
   sed -i -e "s/%SERVICE_NAME_LOWER%/$SERVICE_NAME_LOWER/" ${CSD_BUILD_PATH}/scripts/control.sh
   java -jar cm_ext/validator/target/validator.jar -s ${CSD_BUILD_PATH}/descriptor/service.sdl -l "SPARK_ON_YARN SPARK2_ON_YARN"
   echo "jar -cvf $JARNAME -C ${CSD_BUILD_PATH} ${CSD_PATH}"
-  jar -cvf "target/$JARNAME" -C ${CSD_BUILD_PATH} .
+  jar -cvf "csd-build/$JARNAME" -C ${CSD_BUILD_PATH} .
 }
 
 case $1 in
