@@ -109,6 +109,6 @@ mkdir -p $CSD_RESOURCE_PATH
 cp -rf src/presto/csd/* $CSD_RESOURCE_PATH
 # 打包csd：jar -cvf csd/PRESTO-csd-0.257.jar -C presto-csd-build .
 echo -e "${GREEN}将 ${CYAN}$CSD_RESOURCE_PATH${GREEN} 打包为csd ${CYAN}csd/$CSD_NAME$RESET"
-mkdir -p csd
-jar -cvf csd/$CSD_NAME -C "$CSD_RESOURCE_PATH" .
+mkdir -p csd-build
+jar -cvf csd-build/$CSD_NAME -C "$CSD_RESOURCE_PATH" .
 echo -e "${GREEN}Done!!!!${RESET}"
