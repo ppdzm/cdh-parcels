@@ -1,4 +1,6 @@
 #!/bin/bash
+set -v
+set -x
 # Time marker for both stderr and stdout
 date 1>&2
 

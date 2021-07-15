@@ -320,7 +320,7 @@
       },
       "logging": {
         "dir": "/var/log/presto",
-        "filename": "presto-server.log",
+        "filename": "presto-worker.log",
         "modifiable": true,
         "configName": "log.dir",
         "loggingType": "log4j"

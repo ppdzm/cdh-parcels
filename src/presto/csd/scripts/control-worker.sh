@@ -1,4 +1,6 @@
 #!/bin/bash
+set -v
+set -x
 # Time marker for both stderr and stdout
 date 1>&2
 
@@ -47,6 +49,6 @@ then
 
 fi
 
-exec $PRESTO_PARCEL_PATH/bin/launcher --server-log-file=/var/log/presto/presto-server.log run
+exec $PRESTO_PARCEL_PATH/bin/launcher --server-log-file=/var/log/presto/presto-worker.log run
 
 exit 0
