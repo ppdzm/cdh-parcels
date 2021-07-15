@@ -170,7 +170,7 @@
           "required": "true",
           "type": "path",
           "pathType": "localDataDir",
-          "default": "/data"
+          "default": "/opt/data/presto"
         },
         {
           "name": "query.max-memory",
@@ -262,6 +262,17 @@
               {
                 "key": "hive.metastore.uri",
                 "value": "thrift://${hive_metastore_host}:${hive_metastore_port}"
+              }
+            ]
+          },
+          {
+            "filename": "etc/log.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "com.facebook.presto",
+                "value": "INFO"
               }
             ]
           },

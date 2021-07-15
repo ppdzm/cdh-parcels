@@ -170,7 +170,7 @@
           "required": "true",
           "type": "path",
           "pathType": "localDataDir",
-          "default": "/data"
+          "default": "/opt/data/presto"
         },
         {
           "name": "query.max-memory",
@@ -266,6 +266,17 @@
             ]
           },
           {
+            "filename": "etc/log.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "com.facebook.presto",
+                "value": "INFO"
+              }
+            ]
+          },
+          {
             "filename": "etc/jvm.config",
             "configFormat": "properties",
             "includedParams": [
@@ -351,7 +362,7 @@
           "required": "true",
           "type": "path",
           "pathType": "localDataDir",
-          "default": "/data"
+          "default": "/data/presto"
         }
       ],
       "configWriter": {
