@@ -1,0 +1,10 @@
+{
+  "name" : "SERVICENAME",
+  "label" : "Label",
+  "description" : "The echo service",
+  "version" : 1,
+  "runAs" : {
+    "user" : "echoservice",
+    "group" : "echoservice"
+   }
+}

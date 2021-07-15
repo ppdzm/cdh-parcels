@@ -1,0 +1,65 @@
+{
+  "name" : "ECHO",
+  "label" : "ECHO Server",
+  "description" : "The echo service",
+  "version" : 1,
+  "runAs" : {
+    "user" : "echoservice",
+    "group" : "echoservice"
+   },
+  "parameters" : [
+    {
+       "type" : "long",
+       "name" : "no_bounds",
+       "label" : "no_bounds",
+       "description" : "no_bounds"
+    }, {
+       "type" : "long",
+       "name" : "min",
+       "label" : "min",
+       "description" : "min",
+       "min" : 5
+    }, {
+       "type" : "long",
+       "name" : "max",
+       "label" : "max",
+       "description" : "max",
+       "max" : 8
+    }, {
+       "type" : "long",
+       "name" : "softMin",
+       "label" : "softMin",
+       "description" : "softMin",
+       "softMin" : 6
+    }, {
+       "type" : "long",
+       "name" : "softMax",
+       "label" : "softMax",
+       "description" : "softMax",
+       "softMax" : 7
+    }, {
+       "type" : "long",
+       "name" : "both_soft",
+       "label" : "both_soft",
+       "description" : "both_soft",
+       "softMin" : 6,
+       "softMax" : 7
+    }, {
+       "type" : "long",
+       "name" : "both_hard",
+       "label" : "both_hard",
+       "description" : "both_hard",
+       "min" : 5,
+       "max" : 8
+    }, {
+       "type" : "long",
+       "name" : "all_bounds",
+       "label" : "all_bounds",
+       "description" : "all_bounds",
+       "min" : 5,
+       "softMin" : 6,
+       "softMax" : 7,
+       "max" : 8
+    }
+  ]
+}

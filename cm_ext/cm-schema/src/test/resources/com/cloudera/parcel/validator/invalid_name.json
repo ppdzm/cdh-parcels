@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "foo-bar",
+  "version": "5.0.0",
+  "setActiveSymlink": true,
+
+  "scripts": {
+    "defines": "defines.sh"
+  },
+
+  "packages": [
+  ],
+
+  "components": [
+  ],
+
+  "users": {
+  },
+
+  "groups": [
+  ]
+}
