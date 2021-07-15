@@ -36,7 +36,7 @@ CDH除了能够管理自生所提供的一些大数据相关服务外，还允�
 - 下载资源
 
     ```
-    git clone https://github.com/ppdzm/cdh-parcel.git
+    git clone https://github.com/ppdzm/cdh-parcels.git
     ```
 - 修改配置文件`flink-parcel.properties`
 
@@ -71,7 +71,7 @@ CDH除了能够管理自生所提供的一些大数据相关服务外，还允�
   - on yarn 版本
 
     ```shell
-    ./build.sh  csd_on_yarn
+    ./build.sh  csd
     ```
   - standalone版本
 
@@ -104,10 +104,10 @@ CDH除了能够管理自生所提供的一些大数据相关服务外，还允�
 
 [Cloudera Manager Extensions](https://github.com/cloudera/cm_csds)
 
-[csd参考模板](git@github.com:cloudera/cm_csds.git)
+[csd参考模板](https://github.com/cloudera/cm_csds.git)
 
 [FLINK官方下载地址](https://archive.apache.org/dist/flink/)
 
 [CDH添加第三方服务的方法](https://blog.csdn.net/tony_328427685/article/details/86514385)
 
-​      
+​kerberos —— HYPERS.CC ？

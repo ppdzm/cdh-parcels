@@ -80,7 +80,7 @@ from os.path import realpath, dirname
 
 path = dirname(realpath(sys.argv[0]))
 arg = ' '.join(sys.argv[1:])
-cmd = "env PATH=\"/usr/java/jdk1.8.0_181-cloudera/bin:$PATH\" %s/presto-cli-${PRESTO_VERSION}-executable.jar %s" % (path, arg)
+cmd = "env PATH=\"/usr/java/jdk1.8.0_181-cloudera/bin:$PATH\" %s/presto-cli-0.257-executable.jar %s" % (path, arg)
 
 subprocess.call(cmd, shell=True)
 EOF
@@ -88,6 +88,11 @@ echo -e "${GREEN}修改 $CYAN$PARCEL_RESOURCE_PATH/bin/presto$GREEN 为可执行
 chmod +x "$PARCEL_RESOURCE_PATH/bin/presto"
 # 校验生成parcel前的路径：java -jar cm_ext/validator/target/validator.jar -d PRESTO-0.257-cdh-6.3.2
 echo -e "${GREEN}校验 $CYAN$PARCEL_RESOURCE_PATH$RESET"
+if [ ! -f cm_ext/validator/target/validator.jar ];then
+  cd cm_ext
+  mvn package -DskipTests
+  cd ..
+fi
 java -jar cm_ext/validator/target/validator.jar -d $PARCEL_RESOURCE_PATH
 # 创建PRESTO-0.257-cdh-6.3.2_build
 echo -e "${GREEN}创建 $CYAN$PARCEL_BUILD_PATH$RESET"

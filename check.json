@@ -1,2735 +1,419 @@
 {
-  "beans": [
+  "name": "PRESTO",
+  "label": "Presto",
+  "description": "Distributed SQL Query Engine for Big Data",
+  "version": "0.257",
+  "runAs": {
+    "user": "root",
+    "group": "root"
+  },
+  "inExpressWizard": true,
+  "icon": "images/presto.png",
+  "serviceDependencies": [
     {
-      "name": "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1",
-      "modelerType": "org.eclipse.jetty.webapp.WebAppContext",
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-      "virtualHosts": null,
-      "maxFormContentSize": -1,
-      "displayName": null,
-      "descriptor": null,
-      "gzipHandler": null,
-      "overrideDescriptors": "[]",
-      "classPath": null,
-      "state": "STARTED",
-      "serverClasses": [
-        "-org.eclipse.jetty.util.log.",
-        "-org.eclipse.jetty.continuation.",
-        "-org.eclipse.jetty.servlet.NoJspServlet",
-        "-org.eclipse.jetty.jaas.",
-        "-org.eclipse.jetty.jsp.",
-        "org.eclipse.jetty.",
-        "org.objectweb.asm.",
-        "-org.eclipse.jetty.server.session.SessionData",
-        "-org.eclipse.jetty.servlets.",
-        "-org.eclipse.jetty.websocket.",
-        "-org.eclipse.jetty.servlet.DefaultServlet",
-        "org.eclipse.jdt.",
-        "-org.eclipse.jetty.servlet.listener.",
-        "-org.eclipse.jetty.jndi.",
-        "-org.eclipse.jetty.alpn.",
-        "-org.eclipse.jetty.jmx.",
-        "-org.eclipse.jetty.util.annotation.",
-        "-org.eclipse.jetty.apache."
-      ],
-      "distributable": false,
-      "stopTimeout": 30000,
-      "servletHandler": "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-      "systemClasses": [
-        "org.eclipse.jetty.servlets.PushSessionCacheFilter",
-        "org.eclipse.jetty.websocket.",
-        "org.xml.",
-        "org.eclipse.jetty.servlet.DefaultServlet",
-        "java.",
-        "org.eclipse.jetty.servlets.PushCacheFilter",
-        "org.eclipse.jetty.jaas.",
-        "org.eclipse.jetty.continuation.",
-        "org.eclipse.jetty.util.annotation.",
-        "javax.",
-        "org.eclipse.jetty.jndi.",
-        "org.eclipse.jetty.jsp.JettyJspServlet",
-        "org.w3c.",
-        "org.eclipse.jetty.jmx.",
-        "org.eclipse.jetty.util.log."
-      ],
-      "contextPath": "/",
-      "contextAttributes": "{javax.servlet.context.tempdir=/tmp/jetty-0.0.0.0-7180-webapp-_-any-9196240884632325346.dir, org.eclipse.jetty.server.Executor=BoundedQueuedThreadPool[scm-web]@36f7fd43{STARTED,8<=8<=100,i=3,q=0}[ReservedThreadExecutor@59b4566a{s=3/10,p=0}]}",
-      "war": "/opt/cloudera/cm/webapp",
-      "extractWAR": true,
-      "configurationClasses": [
-        "org.eclipse.jetty.webapp.WebInfConfiguration",
-        "org.eclipse.jetty.webapp.WebXmlConfiguration",
-        "org.eclipse.jetty.webapp.MetaInfConfiguration",
-        "org.eclipse.jetty.webapp.FragmentConfiguration",
-        "org.eclipse.jetty.webapp.JettyWebXmlConfiguration"
-      ],
-      "extraClasspath": null,
-      "childHandlers": [
-        "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-        "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "allowNullPathInfo": false,
-      "tempDirectory": "/tmp/jetty-0.0.0.0-7180-webapp-_-any-9196240884632325346.dir",
-      "resourceBase": "file:///opt/cloudera/cm/webapp/",
-      "securityHandler": "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-      "initParams": "{contextConfigLocation=/WEB-INF/spring/cmf-security.xml, locatorFactorySelector=classpath:webapp/WEB-INF/spring/beanRefFactory.xml, org.eclipse.jetty.servlet.Default.dirAllowed=false, parentContextKey=rootContext, org.eclipse.jetty.servlet.SessionCookie=CLOUDERA_MANAGER_SESSIONID}",
-      "copyWebDir": false,
-      "parentLoaderPriority": false,
-      "handlers": [
-        "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1"
-      ],
-      "sessionHandler": "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-      "defaultsDescriptor": "org/eclipse/jetty/webapp/webdefault.xml",
-      "welcomeFiles": [
-        "index.html",
-        "index.htm",
-        "index.jsp"
-      ],
-      "errorHandler": "org.eclipse.jetty.servlet:context=ROOT,type=errorpageerrorhandler,id=1",
-      "shutdown": false
+      "name": "HIVE",
+      "required": "false"
+    }
+  ],
+  "kerberos": "${hive_kerberos}",
+  "parameters": [
+    {
+      "name": "coordinator_webui_port",
+      "label": "Coordinator Port",
+      "description": "The port of the coordinator",
+      "configName": "http-server.http.port",
+      "required": "true",
+      "type": "port",
+      "default": 8080
     },
     {
-      "name": "org.springframework.security.web.session:context=ROOT,type=httpsessioneventpublisher,id=0",
-      "modelerType": "org.springframework.security.web.session.HttpSessionEventPublisher"
+      "name": "kerberos_realm",
+      "label": "kerberos_realm",
+      "description": "kerberos_realm",
+      "configName": "kerberos_realm",
+      "required": "false",
+      "type": "string",
+      "default": "HYPERS.CC"
     },
     {
-      "name": "java.lang:type=Threading",
-      "modelerType": "sun.management.ThreadImpl",
-      "ThreadAllocatedMemoryEnabled": true,
-      "ThreadAllocatedMemorySupported": true,
-      "ThreadCount": 361,
-      "TotalStartedThreadCount": 7745,
-      "AllThreadIds": [
-        7626,
-        7609,
-        7490,
-        7488,
-        7487,
-        7431,
-        7071,
-        279,
-        4938,
-        4924,
-        4926,
-        4925,
-        4923,
-        422,
-        421,
-        420,
-        419,
-        418,
-        417,
-        415,
-        414,
-        413,
-        411,
-        408,
-        407,
-        406,
-        405,
-        402,
-        400,
-        399,
-        398,
-        391,
-        389,
-        387,
-        386,
-        385,
-        384,
-        382,
-        383,
-        381,
-        380,
-        379,
-        378,
-        377,
-        376,
-        375,
-        374,
-        373,
-        372,
-        371,
-        370,
-        369,
-        368,
-        367,
-        366,
-        365,
-        364,
-        363,
-        362,
-        361,
-        359,
-        358,
-        357,
-        356,
-        355,
-        354,
-        353,
-        352,
-        351,
-        350,
-        349,
-        347,
-        345,
-        344,
-        343,
-        342,
-        341,
-        340,
-        339,
-        338,
-        337,
-        336,
-        335,
-        334,
-        333,
-        332,
-        331,
-        330,
-        329,
-        328,
-        327,
-        326,
-        325,
-        324,
-        323,
-        322,
-        321,
-        320,
-        319,
-        318,
-        317,
-        316,
-        315,
-        314,
-        313,
-        312,
-        311,
-        310,
-        309,
-        308,
-        307,
-        306,
-        305,
-        304,
-        303,
-        302,
-        301,
-        300,
-        299,
-        298,
-        297,
-        296,
-        295,
-        294,
-        293,
-        292,
-        291,
-        290,
-        289,
-        288,
-        287,
-        286,
-        285,
-        284,
-        283,
-        282,
-        281,
-        280,
-        278,
-        277,
-        276,
-        275,
-        274,
-        273,
-        272,
-        271,
-        270,
-        269,
-        268,
-        267,
-        266,
-        265,
-        264,
-        263,
-        262,
-        261,
-        260,
-        259,
-        258,
-        257,
-        256,
-        255,
-        254,
-        253,
-        252,
-        251,
-        250,
-        249,
-        248,
-        247,
-        246,
-        245,
-        244,
-        243,
-        242,
-        241,
-        240,
-        239,
-        238,
-        237,
-        236,
-        235,
-        234,
-        233,
-        232,
-        231,
-        230,
-        229,
-        228,
-        227,
-        226,
-        225,
-        224,
-        223,
-        222,
-        221,
-        220,
-        219,
-        218,
-        217,
-        216,
-        215,
-        214,
-        200,
-        212,
-        211,
-        210,
-        209,
-        208,
-        207,
-        206,
-        205,
-        204,
-        203,
-        202,
-        201,
-        199,
-        198,
-        197,
-        196,
-        195,
-        194,
-        193,
-        192,
-        191,
-        190,
-        189,
-        188,
-        187,
-        186,
-        185,
-        184,
-        183,
-        182,
-        181,
-        180,
-        179,
-        178,
-        177,
-        176,
-        175,
-        174,
-        173,
-        172,
-        171,
-        170,
-        169,
-        168,
-        167,
-        166,
-        165,
-        164,
-        163,
-        162,
-        161,
-        160,
-        159,
-        158,
-        157,
-        156,
-        155,
-        154,
-        153,
-        152,
-        151,
-        150,
-        149,
-        148,
-        147,
-        146,
-        145,
-        144,
-        143,
-        142,
-        141,
-        140,
-        139,
-        138,
-        137,
-        136,
-        135,
-        102,
-        100,
-        99,
-        98,
-        97,
-        96,
-        95,
-        94,
-        93,
-        92,
-        91,
-        90,
-        89,
-        88,
-        87,
-        86,
-        85,
-        84,
-        83,
-        82,
-        81,
-        80,
-        79,
-        78,
-        77,
-        76,
-        75,
-        74,
-        73,
-        72,
-        71,
-        70,
-        69,
-        68,
-        67,
-        66,
-        65,
-        64,
-        63,
-        62,
-        61,
-        60,
-        59,
-        58,
-        57,
-        56,
-        55,
-        54,
-        53,
-        52,
-        51,
-        50,
-        49,
-        48,
-        47,
-        46,
-        45,
-        44,
-        43,
-        42,
-        41,
-        40,
-        39,
-        38,
-        37,
-        36,
-        35,
-        33,
-        32,
-        30,
-        29,
-        28,
-        27,
-        26,
-        25,
-        24,
-        5,
-        3,
-        2,
-        1
-      ],
-      "ThreadContentionMonitoringEnabled": false,
-      "CurrentThreadCpuTime": 320930128,
-      "CurrentThreadUserTime": 280000000,
-      "ThreadCpuTimeSupported": true,
-      "ThreadCpuTimeEnabled": true,
-      "ThreadContentionMonitoringSupported": true,
-      "CurrentThreadCpuTimeSupported": true,
-      "ObjectMonitorUsageSupported": true,
-      "SynchronizerUsageSupported": true,
-      "PeakThreadCount": 399,
-      "DaemonThreadCount": 346,
-      "ObjectName": "java.lang:type=Threading"
+      "name": "hive_kerberos",
+      "label": "hive_kerberos",
+      "description": "if hive use kerberos",
+      "configName": "hive.metastore.authentication.type",
+      "required": "true",
+      "type": "boolean",
+      "default": false
     },
     {
-      "name": "org.eclipse.jetty.server:type=server,id=0",
-      "modelerType": "org.eclipse.jetty.server.Server",
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.server.handler:type=statisticshandler,id=0",
-      "connectors": [
-        "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=serverconnector,id=0"
-      ],
-      "stopTimeout": 30000,
-      "dumpBeforeStop": false,
-      "startupTime": 1626264910900,
-      "contexts": [
-        "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1"
-      ],
-      "version": "9.4.14.v20181114",
-      "childHandlers": [
-        "org.eclipse.jetty.server.handler:type=statisticshandler,id=0",
-        "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1",
-        "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-        "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "dumpAfterStart": false,
-      "handlers": [
-        "org.eclipse.jetty.server.handler:type=statisticshandler,id=0"
-      ],
-      "state": "STARTED",
-      "threadPool": "com.cloudera.server.common:type=boundedqueuedthreadpool,id=0"
+      "name": "discovery_uri",
+      "label": "discovery uri",
+      "description": "discovery uri",
+      "configName": "discovery.uri",
+      "required": "true",
+      "type": "uri",
+      "default": "http://localhost:8080"
     },
     {
-      "name": "java.lang:type=MemoryPool,name=Code Cache",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 151322624,
-        "init": 2555904,
-        "max": 251658240,
-        "used": 150151680
+      "name": "hive_metastore_host",
+      "label": "hive.metastore.host",
+      "description": "hive.metastore.host",
+      "configName": "hive.metastore.host",
+      "required": "true",
+      "type": "string",
+      "default": "localhost"
+    },
+    {
+      "name": "hive_metastore_port",
+      "label": "Metastore Port",
+      "description": "The port of the Metastore",
+      "configName": "hive.metastore.port",
+      "required": "true",
+      "type": "port",
+      "default": 9083
+    }
+  ],
+  "rolesWithExternalLinks": [
+    "PRESTO_COORDINATOR"
+  ],
+  "roles": [
+    {
+      "name": "PRESTO_COORDINATOR",
+      "label": "Coordinator",
+      "pluralLabel": "Coordinators",
+      "startRunner": {
+        "program": "scripts/control-master.sh"
       },
-      "PeakUsage": {
-        "committed": 151322624,
-        "init": 2555904,
-        "max": 251658240,
-        "used": 150162112
+      "logging": {
+        "dir": "/var/log/presto",
+        "filename": "presto-server.log",
+        "modifiable": true,
+        "configName": "log.dir",
+        "loggingType": "log4j"
       },
-      "MemoryManagerNames": [
-        "CodeCacheManager"
-      ],
-      "UsageThreshold": 0,
-      "UsageThresholdExceeded": false,
-      "UsageThresholdCount": 0,
-      "UsageThresholdSupported": true,
-      "CollectionUsage": null,
-      "CollectionUsageThresholdSupported": false,
-      "Name": "Code Cache",
-      "Type": "NON_HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=Code Cache"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=ImpalaController,name=queryDetailsQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "java.nio:type=BufferPool,name=direct",
-      "modelerType": "sun.management.ManagementFactoryHelper$1",
-      "TotalCapacity": 20942039,
-      "MemoryUsed": 20942040,
-      "Name": "direct",
-      "Count": 502,
-      "ObjectName": "java.nio:type=BufferPool,name=direct"
-    },
-    {
-      "name": "org.eclipse.jetty.io:context=HTTP/1.1@55a9a0ba,type=managedselector$selectorproducer,id=0",
-      "modelerType": "org.eclipse.jetty.io.ManagedSelector$SelectorProducer"
-    },
-    {
-      "name": "java.lang:type=MemoryManager,name=CodeCacheManager",
-      "modelerType": "sun.management.MemoryManagerImpl",
-      "Valid": true,
-      "MemoryPoolNames": [
-        "Code Cache"
-      ],
-      "Name": "CodeCacheManager",
-      "ObjectName": "java.lang:type=MemoryManager,name=CodeCacheManager"
-    },
-    {
-      "name": "org.eclipse.jetty.util.thread:context=HTTP/1.1@55a9a0ba,type=scheduledexecutorscheduler,id=0",
-      "modelerType": "org.eclipse.jetty.util.thread.ScheduledExecutorScheduler",
-      "stopTimeout": 30000,
-      "state": "STARTED"
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor.components:type=DescriptorFactory,name=configDescriptorGenerationDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=activeCount",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 0
-    },
-    {
-      "name": "org.eclipse.jetty.server.session:context=ROOT,type=nullsessiondatastore,id=0",
-      "modelerType": "org.eclipse.jetty.server.session.NullSessionDataStore",
-      "stopTimeout": 30000,
-      "savePeriodSec": 0,
-      "state": "STARTED",
-      "gracePeriodSec": 3600,
-      "passivating": false
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.yarn.components:type=YarnDao,name=get-filter-metadata-duration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 1,
-      "Min": 12.0,
-      "Max": 12.0,
-      "50thPercentile": 12.0,
-      "Mean": 12.0,
-      "StdDev": 0.0,
-      "75thPercentile": 12.0,
-      "95thPercentile": 12.0,
-      "98thPercentile": 12.0,
-      "99thPercentile": 12.0,
-      "999thPercentile": 12.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=YarnController,name=completedApplicationsQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.events:type=EventDao,name=eventServerQuery",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 8,
-      "Min": 4.0,
-      "Max": 9.0,
-      "50thPercentile": 6.0,
-      "Mean": 6.125,
-      "StdDev": 1.6420805617960927,
-      "75thPercentile": 7.5,
-      "95thPercentile": 9.0,
-      "98thPercentile": 9.0,
-      "99thPercentile": 9.0,
-      "999thPercentile": 9.0
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=maxPoolSize",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 50
-    },
-    {
-      "name": "java.lang:type=GarbageCollector,name=ConcurrentMarkSweep",
-      "modelerType": "sun.management.GarbageCollectorImpl",
-      "LastGcInfo": {
-        "GcThreadCount": 30,
-        "duration": 3265,
-        "endTime": 67861948,
-        "id": 27,
-        "memoryUsageAfterGc": [
-          {
-            "key": "Par Survivor Space",
-            "value": {
-              "committed": 71565312,
-              "init": 35127296,
-              "max": 71565312,
-              "used": 71565312
-            }
-          },
-          {
-            "key": "Compressed Class Space",
-            "value": {
-              "committed": 29523968,
-              "init": 0,
-              "max": 1073741824,
-              "used": 27652544
-            }
-          },
-          {
-            "key": "Metaspace",
-            "value": {
-              "committed": 228388864,
-              "init": 0,
-              "max": -1,
-              "used": 217212640
-            }
-          },
-          {
-            "key": "Code Cache",
-            "value": {
-              "committed": 150994944,
-              "init": 2555904,
-              "max": 251658240,
-              "used": 149756480
-            }
-          },
-          {
-            "key": "Par Eden Space",
-            "value": {
-              "committed": 572653568,
-              "init": 281346048,
-              "max": 572653568,
-              "used": 446386248
-            }
-          },
-          {
-            "key": "CMS Old Gen",
-            "value": {
-              "committed": 1431699456,
-              "init": 703266816,
-              "max": 1431699456,
-              "used": 717062168
-            }
-          }
-        ],
-        "memoryUsageBeforeGc": [
-          {
-            "key": "Par Survivor Space",
-            "value": {
-              "committed": 71565312,
-              "init": 35127296,
-              "max": 71565312,
-              "used": 71565312
-            }
-          },
-          {
-            "key": "Compressed Class Space",
-            "value": {
-              "committed": 29523968,
-              "init": 0,
-              "max": 1073741824,
-              "used": 27649136
-            }
-          },
-          {
-            "key": "Metaspace",
-            "value": {
-              "committed": 228388864,
-              "init": 0,
-              "max": -1,
-              "used": 217167128
-            }
-          },
-          {
-            "key": "Code Cache",
-            "value": {
-              "committed": 150929408,
-              "init": 2555904,
-              "max": 251658240,
-              "used": 149697920
-            }
-          },
-          {
-            "key": "Par Eden Space",
-            "value": {
-              "committed": 572653568,
-              "init": 281346048,
-              "max": 572653568,
-              "used": 63804248
-            }
-          },
-          {
-            "key": "CMS Old Gen",
-            "value": {
-              "committed": 1431699456,
-              "init": 703266816,
-              "max": 1431699456,
-              "used": 1083760032
-            }
-          }
-        ],
-        "startTime": 67858683
-      },
-      "CollectionCount": 27,
-      "CollectionTime": 12545,
-      "Valid": true,
-      "MemoryPoolNames": [
-        "Par Eden Space",
-        "Par Survivor Space",
-        "CMS Old Gen"
-      ],
-      "Name": "ConcurrentMarkSweep",
-      "ObjectName": "java.lang:type=GarbageCollector,name=ConcurrentMarkSweep"
-    },
-    {
-      "name": "org.eclipse.jetty.io:context=HTTP/1.1@55a9a0ba,type=connectionstatistics,id=0",
-      "modelerType": "org.eclipse.jetty.io.ConnectionStatistics",
-      "receivedBytes": 49561114,
-      "receivedMessagesRate": 37,
-      "stopTimeout": 30000,
-      "connectionDurationStdDev": 261275.12628110035,
-      "connectionsTotal": 53716,
-      "connectionDurationMax": 26235253,
-      "receivedMessages": 135526,
-      "sentBytesRate": 1164382,
-      "connectionsMax": 487,
-      "sentMessages": 135526,
-      "sentMessagesRate": 37,
-      "connectionDurationMean": 398900.70200739865,
-      "state": "STARTED",
-      "receivedBytesRate": 13766,
-      "sentBytes": 4191790676,
-      "connections": 463
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=largestPoolSize",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 5
-    },
-    {
-      "name": "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2",
-      "modelerType": "org.eclipse.jetty.server.handler.gzip.GzipHandler",
-      "childHandlers": [],
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": null,
-      "stopTimeout": 30000,
-      "handlers": [],
-      "state": "STARTED"
-    },
-    {
-      "name": "org.eclipse.jetty.servlet:context=ROOT,type=errorpageerrorhandler,id=1",
-      "modelerType": "org.eclipse.jetty.servlet.ErrorPageErrorHandler",
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "stopTimeout": 30000,
-      "state": "STARTED"
-    },
-    {
-      "name": "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-      "modelerType": "org.eclipse.jetty.server.session.SessionHandler",
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-      "stopTimeout": 30000,
-      "sessionTimeMean": 2123.022354381,
-      "secureCookies": false,
-      "checkingRemoteSessionIdEncoding": false,
-      "sessionCookie": "CLOUDERA_MANAGER_SESSIONID",
-      "sessionIdPathParameterName": "jsessionid",
-      "sessionTimeTotal": 111021331,
-      "childHandlers": [
-        "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "refreshCookieAge": 0,
-      "sessionTimeMax": 3716,
-      "maxCookieAge": -1,
-      "maxInactiveInterval": 1800,
-      "handlers": [
-        "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2"
-      ],
-      "sessionIdManager": "DefaultSessionIdManager@60dced3f{STARTED}[worker=node0]",
-      "state": "STARTED",
-      "httpOnly": true,
-      "sessionPath": null,
-      "sessionDomain": null,
-      "sessionsCreated": 55078,
-      "sessionTimeStdDev": 194.03590055430027
-    },
-    {
-      "name": "org.eclipse.jetty.server.session:type=housekeeper,id=0",
-      "modelerType": "org.eclipse.jetty.server.session.HouseKeeper",
-      "stopTimeout": 30000,
-      "state": "STARTED",
-      "intervalSec": 660
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=HealthReportHelper,name=smonReportRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 3,
-      "Min": 2.0,
-      "Max": 5.0,
-      "50thPercentile": 4.0,
-      "Mean": 3.6666666666666665,
-      "StdDev": 1.5275252316519465,
-      "75thPercentile": 5.0,
-      "95thPercentile": 5.0,
-      "98thPercentile": 5.0,
-      "99thPercentile": 5.0,
-      "999thPercentile": 5.0
-    },
-    {
-      "name": "com.cloudera.cmf.service.auth:type=AuthServiceLoginMonitor,name=loginFailure",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "org.eclipse.jetty.jmx:type=mbeancontainer,id=1",
-      "modelerType": "org.eclipse.jetty.jmx.MBeanContainer",
-      "useCacheForOtherClassLoaders": true,
-      "domain": null
-    },
-    {
-      "name": "java.nio:type=BufferPool,name=mapped",
-      "modelerType": "sun.management.ManagementFactoryHelper$1",
-      "TotalCapacity": 4133530,
-      "MemoryUsed": 4133530,
-      "Name": "mapped",
-      "Count": 6,
-      "ObjectName": "java.nio:type=BufferPool,name=mapped"
-    },
-    {
-      "name": "com.sun.management:type=DiagnosticCommand",
-      "modelerType": "sun.management.DiagnosticCommandImpl"
-    },
-    {
-      "name": "org.eclipse.jetty.util.thread.strategy:context=HTTP/1.1@55a9a0ba,type=eatwhatyoukill,id=0",
-      "modelerType": "org.eclipse.jetty.util.thread.strategy.EatWhatYouKill",
-      "stopTimeout": 30000,
-      "pCTasksConsumed": 1209,
-      "pECTasksExecuted": 4,
-      "idle": false,
-      "ePCTasksConsumed": 432398,
-      "state": "STARTED",
-      "pICTasksExecuted": 0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.search.components:type=SearchRepositoryManager,name=indexBuilds",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Timer",
-      "LatencyUnit": "MILLISECONDS",
-      "RateUnit": "SECONDS",
-      "MeanRate": 1.4625821217057831E-5,
-      "OneMinuteRate": 2.964393875E-314,
-      "FiveMinuteRate": 3.614337536667492E-102,
-      "FifteenMinuteRate": 1.1414924092190599E-36,
-      "EventType": "calls",
-      "Count": 1,
-      "Min": 1009.32386,
-      "Max": 1009.32386,
-      "50thPercentile": 1009.32386,
-      "Mean": 1009.32386,
-      "StdDev": 0.0,
-      "75thPercentile": 1009.32386,
-      "95thPercentile": 1009.32386,
-      "98thPercentile": 1009.32386,
-      "99thPercentile": 1009.32386,
-      "999thPercentile": 1009.32386
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=HealthReportHelper,name=hmonReportRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.sun.management:type=HotSpotDiagnostic",
-      "modelerType": "sun.management.HotSpotDiagnostic",
-      "DiagnosticOptions": [
+      "kerberosPrincipals": [
         {
-          "name": "HeapDumpBeforeFullGC",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "HeapDumpAfterFullGC",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "HeapDumpOnOutOfMemoryError",
-          "origin": "VM_CREATION",
-          "value": "true",
-          "writeable": true
-        },
-        {
-          "name": "HeapDumpPath",
-          "origin": "VM_CREATION",
-          "value": "/tmp",
-          "writeable": true
-        },
-        {
-          "name": "CMSAbortablePrecleanWaitMillis",
-          "origin": "DEFAULT",
-          "value": "100",
-          "writeable": true
-        },
-        {
-          "name": "CMSWaitDuration",
-          "origin": "DEFAULT",
-          "value": "2000",
-          "writeable": true
-        },
-        {
-          "name": "CMSTriggerInterval",
-          "origin": "DEFAULT",
-          "value": "-1",
-          "writeable": true
-        },
-        {
-          "name": "PrintGC",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintGCDetails",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintGCDateStamps",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintGCTimeStamps",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintGCID",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintClassHistogramBeforeFullGC",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintClassHistogramAfterFullGC",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "PrintClassHistogram",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "MinHeapFreeRatio",
-          "origin": "DEFAULT",
-          "value": "40",
-          "writeable": true
-        },
-        {
-          "name": "MaxHeapFreeRatio",
-          "origin": "DEFAULT",
-          "value": "70",
-          "writeable": true
-        },
-        {
-          "name": "PrintConcurrentLocks",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
-        },
-        {
-          "name": "UnlockCommercialFeatures",
-          "origin": "DEFAULT",
-          "value": "false",
-          "writeable": true
+          "name": "presto",
+          "primary": "presto",
+          "instance": "${host}"
         }
       ],
-      "ObjectName": "com.sun.management:type=HotSpotDiagnostic"
-    },
-    {
-      "name": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=abstractconnector$acceptor,id=0",
-      "modelerType": "org.eclipse.jetty.server.AbstractConnector$Acceptor"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.impala.components:type=ImpalaDao,name=get-filter-metadata-duration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 1,
-      "Min": 79.0,
-      "Max": 79.0,
-      "50thPercentile": 79.0,
-      "Mean": 79.0,
-      "StdDev": 0.0,
-      "75thPercentile": 79.0,
-      "95thPercentile": 79.0,
-      "98thPercentile": 79.0,
-      "99thPercentile": 79.0,
-      "999thPercentile": 79.0
-    },
-    {
-      "name": "java.lang:type=Compilation",
-      "modelerType": "sun.management.CompilationImpl",
-      "TotalCompilationTime": 323456,
-      "CompilationTimeMonitoringSupported": true,
-      "Name": "HotSpot 64-Bit Tiered Compilers",
-      "ObjectName": "java.lang:type=Compilation"
-    },
-    {
-      "name": "com.cloudera.cmf.service.auth:type=AuthServiceLoginMonitor,name=loginSlow",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=CommandPusherThread,name=commands_failed_in_batch",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=configDefaultsGenerationBumpsByExplicitCalls",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "java.util.logging:type=Logging",
-      "modelerType": "sun.management.ManagementFactoryHelper$PlatformLoggingImpl",
-      "ObjectName": "java.util.logging:type=Logging",
-      "LoggerNames": [
-        "org.jboss.netty.channel.socket.nio.SelectorUtil",
-        "global",
-        "org.jboss.netty.handler.ssl.SslHandler",
-        "org.jboss.netty.channel.CompleteChannelFuture",
-        "org.python.google.common.util.concurrent.AbstractFuture",
-        "com.sun.xml.bind.v2.runtime.property.Utils",
-        "javax.management.monitor",
-        "javax.ws.rs.ext.FactoryFinder",
-        "com.google.common.cache.LocalCache",
-        "com.sun.xml.bind.v2.runtime.ClassBeanInfoImpl",
-        "com.sun.xml.bind.v2.runtime.JaxBeanInfo",
-        "org.jboss.netty.util.HashedWheelTimer",
-        "org.jboss.netty.channel.socket.nio.DefaultNioSocketChannelConfig",
-        "com.sun.xml.bind.v2.runtime.unmarshaller.UnmarshallingContext",
-        "org.python.google.common.cache.CacheBuilder",
-        "org.jboss.netty.handler.stream.ChunkedWriteHandler",
-        "javax.management",
-        "javax.management.snmp",
-        "DefaultMustacheVisitor",
-        "com.google.common.util.concurrent.ExecutionList",
-        "javax.management.notification",
-        "javax.management.snmp.daemon",
-        "org.aspectj.weaver.World",
-        "org.jboss.netty.channel.DefaultChannelPipeline",
-        "com.sun.xml.bind.v2.runtime.MarshallerImpl",
-        "org.postgresql.Driver",
-        "org.postgresql",
-        "com.sun.xml.bind.v2.ContextFactory",
-        "org.jboss.netty.channel.socket.nio.AbstractNioSelector",
-        "javax.management.modelmbean",
-        "com.sun.xml.bind.v2.ClassFactory",
-        "com.sun.xml.bind.v2.model.impl.ModelBuilder",
-        "sun.net.www.protocol.http.HttpURLConnection",
-        "org.jboss.netty.channel.socket.nio.NioClientSocketChannel",
-        "org.jboss.netty.channel.SimpleChannelUpstreamHandler",
-        "javax.management.misc",
-        "com.sun.xml.bind.v2.model.impl.RuntimeBuiltinLeafInfoImpl",
-        "org.postgresql.util.SharedTimer",
-        "javax.management.mlet",
-        "org.jboss.netty.util.internal.SharedResourceMisuseDetector",
-        "org.aspectj.weaver.Lint",
-        "com.sun.xml.bind.v2.runtime.Utils",
-        "javax.xml.bind",
-        "javax.management.timer",
-        "org.jboss.netty.channel.socket.nio.NioClientSocketPipelineSink",
-        "com.sun.xml.bind.v2.runtime.reflect.Accessor$FieldReflection",
-        "org.jboss.netty.channel.socket.nio.AbstractNioBossPool",
-        "org.jboss.netty.util.internal.SystemPropertyUtil",
-        "mustache",
-        "com.google.common.collect.MapMakerInternalMap",
-        "javax.management.relation",
-        "org.python.google.common.cache.LocalCache",
-        "org.jboss.netty.channel.socket.nio.AbstractNioWorkerPool",
-        "org.jboss.netty.util.ThreadRenamingRunnable",
-        "com.google.common.cache.CacheBuilder",
-        "com.sun.xml.bind.v2.runtime.reflect.Utils",
-        "java.io.serialization",
-        "com.ning.http.client.listenable.ExecutionList",
-        "org.jboss.netty.channel.DefaultChannelFuture",
-        "com.sun.xml.bind.v2.model.impl.Utils",
-        "org.python.google.common.base.Platform",
-        "",
-        "javax.management.mbeanserver"
-      ]
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=completedTaskCount",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 52682
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=AgentProtocolImpl,name=processingDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 18250,
-      "Min": 11.0,
-      "Max": 219.0,
-      "50thPercentile": 17.0,
-      "Mean": 16.963890410958903,
-      "StdDev": 3.3496384851908445,
-      "75thPercentile": 18.0,
-      "95thPercentile": 20.549999999999955,
-      "98thPercentile": 25.0,
-      "99thPercentile": 28.0,
-      "999thPercentile": 49.971000000000004
-    },
-    {
-      "name": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=httpconfiguration,id=0",
-      "modelerType": "org.eclipse.jetty.server.HttpConfiguration",
-      "responseHeaderSize": 8192,
-      "requestHeaderSize": 8192,
-      "sendDateHeader": true,
-      "maxErrorDispatches": 10,
-      "delayDispatchUntilContent": true,
-      "secureScheme": "https",
-      "securePort": 0,
-      "sendServerVersion": false,
-      "persistentConnectionsEnabled": true,
-      "idleTimeout": -1,
-      "notifyRemoteAsyncErrors": true,
-      "outputBufferSize": 32768,
-      "headerCacheSize": 4096,
-      "minRequestDataRate": 0,
-      "sendXPoweredBy": false,
-      "blockingTimeout": -1,
-      "outputAggregationSize": 8192,
-      "minResponseDataRate": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=scmDescriptorGenerationDurationMs",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 16,
-      "Min": 246.0,
-      "Max": 2814.0,
-      "50thPercentile": 264.5,
-      "Mean": 466.25,
-      "StdDev": 630.3174332561862,
-      "75thPercentile": 310.5,
-      "95thPercentile": 397.0,
-      "98thPercentile": 397.0,
-      "99thPercentile": 397.0,
-      "999thPercentile": 397.0
-    },
-    {
-      "name": "org.apache.logging.log4j2:type=67f89fa3,component=StatusLogger",
-      "modelerType": "org.apache.logging.log4j.core.jmx.StatusLoggerAdmin",
-      "ObjectName": "org.apache.logging.log4j2:type=67f89fa3,component=StatusLogger",
-      "Level": "WARN",
-      "StatusData": "[org.apache.logging.log4j.status.StatusData@1a983a7e]",
-      "StatusDataHistory": [
-        "2021-07-14 20:14:43,084 JmxPeriodicLogging-0 ERROR No log4j2 configuration file found. Using default configuration: logging only errors to the console. Set system property 'org.apache.logging.log4j.simplelog.StatusLogger.level' to TRACE to show Log4j2 internal initialization logging."
-      ],
-      "ContextName": "67f89fa3"
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=queueSize",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=poolSize",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=AgentProtocolImpl,name=heartbeatsProcessed",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 18250
-    },
-    {
-      "name": "java.lang:type=MemoryPool,name=Compressed Class Space",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 29523968,
-        "init": 0,
-        "max": 1073741824,
-        "used": 27657088
+      "externalLink": {
+        "name": "coordinator_web_ui",
+        "label": "Coordinator Web UI",
+        "url": "http://${host}:${coordinator_webui_port}"
       },
-      "PeakUsage": {
-        "committed": 29523968,
-        "init": 0,
-        "max": 1073741824,
-        "used": 27657088
+      "topology": {
+        "maxInstances": 1
       },
-      "MemoryManagerNames": [
-        "Metaspace Manager"
-      ],
-      "UsageThreshold": 0,
-      "UsageThresholdExceeded": false,
-      "UsageThresholdCount": 0,
-      "UsageThresholdSupported": true,
-      "CollectionUsage": null,
-      "CollectionUsageThresholdSupported": false,
-      "Name": "Compressed Class Space",
-      "Type": "NON_HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=Compressed Class Space"
-    },
-    {
-      "name": "com.cloudera.cmf.service.auth:type=AuthServiceLoginMonitor,name=loginTimeMs",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.enterprise:type=DatabaseSizeGauge,name=databaseSize",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 58458112
-    },
-    {
-      "name": "org.eclipse.jetty.server.handler:type=errorhandler,id=0",
-      "modelerType": "org.eclipse.jetty.server.handler.ErrorHandler",
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "stopTimeout": 30000,
-      "state": "STARTED"
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=configDefaultsGenerationBumpsByTransactions",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "org.apache.logging.log4j2:type=67f89fa3,component=ContextSelector",
-      "modelerType": "org.apache.logging.log4j.core.jmx.ContextSelectorAdmin",
-      "ImplementationClassName": "org.apache.logging.log4j.core.selector.ClassLoaderContextSelector"
-    },
-    {
-      "name": "java.lang:type=MemoryPool,name=CMS Old Gen",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 1431699456,
-        "init": 703266816,
-        "max": 1431699456,
-        "used": 810029072
-      },
-      "PeakUsage": {
-        "committed": 1431699456,
-        "init": 703266816,
-        "max": 1431699456,
-        "used": 1418007424
-      },
-      "MemoryManagerNames": [
-        "ConcurrentMarkSweep"
-      ],
-      "UsageThreshold": 0,
-      "UsageThresholdExceeded": false,
-      "UsageThresholdCount": 0,
-      "UsageThresholdSupported": true,
-      "CollectionUsageThreshold": 0,
-      "CollectionUsageThresholdExceeded": false,
-      "CollectionUsageThresholdCount": 0,
-      "CollectionUsage": {
-        "committed": 1431699456,
-        "init": 703266816,
-        "max": 1431699456,
-        "used": 717062168
-      },
-      "CollectionUsageThresholdSupported": true,
-      "Name": "CMS Old Gen",
-      "Type": "HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=CMS Old Gen"
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=scmDescriptorGenerationBumpsByTransactions",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 11
-    },
-    {
-      "name": "com.cloudera.server.cmf.actionables.components:type=ActionablesProviderImpl,name=computeActionables",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 20,
-      "Min": 327.0,
-      "Max": 3223.0,
-      "50thPercentile": 396.0,
-      "Mean": 836.25,
-      "StdDev": 1007.2355536448839,
-      "75thPercentile": 448.25,
-      "95thPercentile": 3223.0,
-      "98thPercentile": 3223.0,
-      "99thPercentile": 3223.0,
-      "999thPercentile": 3223.0
-    },
-    {
-      "name": "org.eclipse.jetty.util.thread:type=reservedthreadexecutor,id=0",
-      "modelerType": "org.eclipse.jetty.util.thread.ReservedThreadExecutor",
-      "stopTimeout": 30000,
-      "pending": 0,
-      "available": 3,
-      "idleTimeoutMs": 60000,
-      "state": "STARTED",
-      "capacity": 10
-    },
-    {
-      "name": "JMImplementation:type=MBeanServerDelegate",
-      "modelerType": "javax.management.MBeanServerDelegate",
-      "MBeanServerId": "cdh1.ikcrm.com_1626264883096",
-      "SpecificationName": "Java Management Extensions",
-      "SpecificationVersion": "1.4",
-      "SpecificationVendor": "Oracle Corporation",
-      "ImplementationName": "JMX",
-      "ImplementationVersion": "1.8.0_181-b13",
-      "ImplementationVendor": "Oracle Corporation"
-    },
-    {
-      "name": "java.lang:type=Runtime",
-      "modelerType": "sun.management.RuntimeImpl",
-      "BootClassPathSupported": true,
-      "VmName": "Java HotSpot(TM) 64-Bit Server VM",
-      "VmVendor": "Oracle Corporation",
-      "VmVersion": "25.181-b13",
-      "LibraryPath": "/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib",
-      "BootClassPath": "/usr/java/jdk1.8.0_181-cloudera/jre/lib/resources.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/rt.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/sunrsasign.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jsse.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jce.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/charsets.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jfr.jar:/usr/java/jdk1.8.0_181-cloudera/jre/classes",
-      "Uptime": 68405037,
-      "ManagementSpecVersion": "1.2",
-      "SpecName": "Java Virtual Machine Specification",
-      "SpecVendor": "Oracle Corporation",
-      "SpecVersion": "1.8",
-      "SystemProperties": [
-        {
-          "key": "log4j.configuration",
-          "value": "file:/etc/cloudera-scm-server/log4j.properties"
-        },
-        {
-          "key": "awt.toolkit",
-          "value": "sun.awt.X11.XToolkit"
-        },
-        {
-          "key": "file.encoding.pkg",
-          "value": "sun.io"
-        },
-        {
-          "key": "java.specification.version",
-          "value": "1.8"
-        },
-        {
-          "key": "sun.cpu.isalist",
-          "value": ""
-        },
-        {
-          "key": "sun.jnu.encoding",
-          "value": "UTF-8"
-        },
-        {
-          "key": "java.class.path",
-          "value": ".:/usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:lib/cxf-core-3.1.12.jar:lib/Saxon-HE-9.5.1-1.jar:lib/cxf-rt-frontend-jaxrs-3.1.12.jar:lib/activation-1.1.1.jar:lib/flume-ng-sdk-1.2.0.jar:lib/agent-6.3.1.jar:lib/gson-2.2.jar:lib/alarms-6.3.1.jar:lib/dom4j-1.6.1.jar:lib/alertpublisher-6.3.1.jar:lib/guava-14.0.jar:lib/alfredo-0.1.4.jar:lib/drools-compiler-7.13.0.Final.jar:lib/annotations-2.0.1.jar:lib/headlamp-6.3.1.jar:lib/ant-1.9.6.jar:lib/drools-core-7.13.0.Final.jar:lib/ant-launcher-1.9.6.jar:lib/hsqldb-2.3.1.jar:lib/antlr-2.7.7.jar:lib/drools-templates-7.13.0.Final.jar:lib/antlr-runtime-3.3.jar:lib/httpclient-4.5.6.jar:lib/aopalliance-1.0.jar:lib/ecc-25519-java-1.0.1.jar:lib/apache-mime4j-0.6.jar:lib/jamon-api-2.3.1.jar:lib/asm-5.2.jar:lib/httpcore-4.4.10.jar:lib/aspectjrt-1.9.2.jar:lib/ecj-4.3.1.jar:lib/aspectjtools-1.9.2.jar:lib/commons-httpclient-3.1.jar:lib/async-http-client-1.9.40.jar:lib/ehcache-2.10.3.jar:lib/avro-1.7.6-cdh5.12.0.jar:lib/commons-io-2.4.jar:lib/jta-1.1.jar:lib/avro-ipc-1.7.6-cdh5.12.0.jar:lib/el-api-2.2.jar:lib/bcpg-jdk15on-1.51.jar:lib/enunciate-core-2.7.0.jar:lib/bcpkix-jdk15on-1.51.jar:lib/enunciate-core-annotations-2.7.0.jar:lib/bcprov-jdk15on-1.51.jar:lib/ini4j-0.5.1.jar:lib/c3p0-0.9.2.1.jar:lib/enunciate-javac-support-2.7.0.jar:lib/camel-core-2.19.2.jar:lib/esapi-2.0.1.jar:lib/camel-mail-2.19.2.jar:lib/event-common-6.3.1.jar:lib/cdh-client-6.3.1.jar:lib/inspector-6.3.1.jar:lib/cdi-api-1.1.jar:lib/jackson-core-2.9.8.jar:lib/cglib-3.2.2.jar:lib/jackson-core-asl-1.9.13.jar:lib/classmate-1.1.0.jar:lib/commons-lang-2.6.jar:lib/cloudera-manager-api-6.3.1.jar:lib/commons-logging-1.1.1.jar:lib/cloudera-manager-schema-6.3.1.jar:lib/jackson-databind-2.9.8.jar:lib/common-6.3.1.jar:lib/event-publish-6.3.1.jar:lib/common-thrifts-6.3.1.jar:lib/event-query-6.3.1.jar:lib/commons-beanutils-1.9.3.jar:lib/commons-fileupload-1.3.3.jar:lib/poi-3.16.jar:lib/commons-cli-1.3-cloudera-pre-r1439998.jar:lib/eventcatcher-6.3.1.jar:lib/commons-codec-1.8.jar:lib/commons-math-2.2.jar:lib/commons-collections-3.2.2.jar:lib/compiler-0.8.12.jar:lib/commons-collections4-4.2.jar:lib/firehose-6.3.1.jar:lib/commons-compress-1.18.jar:lib/debug-6.3.1.jar:lib/commons-configuration-1.9.jar:lib/firehose-client-6.3.1.jar:lib/commons-dbutils-1.4.jar:lib/core-3.2.1.jar:lib/cxf-rt-rs-client-3.1.12.jar:lib/db-common-6.3.1.jar:lib/jamonapi-2.73.jar:lib/cxf-rt-rs-extension-providers-3.1.12.jar:lib/descriptors-6.3.1.jar:lib/cxf-rt-transports-http-3.1.12.jar:lib/diffutils-1.2.1.jar:lib/cxf-rt-transports-local-3.1.12.jar:lib/javassist-3.20.0-GA.jar:lib/javase-3.2.1.jar:lib/flume-ng-configuration-1.2.0.jar:lib/geronimo-jta_1.1_spec-1.1.1.jar:lib/hibernate-c3p0-5.2.4.Final.jar:lib/hibernate-commons-annotations-5.0.1.Final.jar:lib/hibernate-core-5.2.4.Final.jar:lib/hibernate-ehcache-5.2.4.Final.jar:lib/hibernate-entitymanager-5.2.4.Final.jar:lib/hibernate-envers-5.2.4.Final.jar:lib/hibernate-jpa-2.1-api-1.0.0.Final.jar:lib/hibernate-validator-5.2.4.Final.jar:lib/hue-plugins-3.9.0-cdh5.14.0.jar:lib/impala-profile-extractor-6.3.1.jar:lib/jackson-annotations-2.9.8.jar:lib/jackson-dataformat-csv-2.9.8.jar:lib/jackson-datatype-joda-2.9.8.jar:lib/jackson-jaxrs-1.9.13.jar:lib/jackson-jaxrs-base-2.9.8.jar:lib/jackson-jaxrs-json-provider-2.9.8.jar:lib/jackson-mapper-asl-1.9.13-cloudera.1.jar:lib/jackson-module-jaxb-annotations-2.9.8.jar:lib/jackson-module-mrbean-2.9.8.jar:lib/jackson-xc-1.9.13.jar:lib/jamon-processor-2.4.2.jar:lib/jamon-runtime-2.4.1.jar:lib/jandex-2.0.0.Final.jar:lib/java-xmlbuilder-0.4.jar:lib/libthrift-0.12.0.jar:lib/javatuples-1.2.jar:lib/jetty-webapp-9.4.14.v20181114.jar:lib/javax.activation-api-1.2.0.jar:lib/jetty-xml-9.4.14.v20181114.jar:lib/javax.annotation-api-1.2.jar:lib/log4j-1.2.16.jar:lib/javax.inject-1.jar:lib/keycloak-adapter-spi-4.5.0.Final.jar:lib/javax.json-1.0.4.jar:lib/keycloak-common-4.5.0.Final.jar:lib/javax.json.bind-api-1.0.jar:lib/keycloak-core-4.5.0.Final.jar:lib/javax.mail-1.5.5.jar:lib/keycloak-services-4.5.0.Final.jar:lib/javax.mail-api-1.5.6.jar:lib/kie-api-7.13.0.Final.jar:lib/javax.servlet-api-4.0.1.jar:lib/kie-internal-7.13.0.Final.jar:lib/javax.ws.rs-api-2.0.1.jar:lib/jgrapht-core-0.9.1.jar:lib/javax.xml.soap-api-1.4.0.jar:lib/joda-time-2.7.jar:lib/jaxb-api-2.4.0-b180830.0359.jar:lib/kie-soup-commons-7.13.0.Final.jar:lib/jaxb-core-2.3.0.1.jar:lib/jopt-simple-3.2.jar:lib/jaxb-impl-2.4.0-b180830.0438.jar:lib/log4j-api-2.8.2.jar:lib/jaxp-api-1.4.jar:lib/log4j-core-2.8.2.jar:lib/jaxws-api-2.3.1.jar:lib/mvel2-2.4.2.Final.jar:lib/model-6.3.1.jar:lib/jboss-annotations-api_1.2_spec-1.0.0.Final.jar:lib/jetty-server-9.4.14.v20181114.jar:lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar:lib/jsoup-1.10.3.jar:lib/jboss-logging-3.3.0.Final.jar:lib/jetty-servlet-9.4.14.v20181114.jar:lib/jboss-transaction-api_1.2_spec-1.0.1.Final.jar:lib/leveldbjni-all-1.8.jar:lib/jcip-annotations-1.0.jar:lib/logredactor-2.0.6.jar:lib/jcommander-1.30.jar:lib/lucene-core-3.4.0.jar:lib/jdbcdslog-1.0.6.jar:lib/mail-1.4.3.jar:lib/jets3t-0.9.0.jar:lib/jetty-util-9.4.14.v20181114.jar:lib/jetty-continuation-9.4.14.v20181114.jar:lib/jsr250-api-1.0.jar:lib/jetty-http-9.4.14.v20181114.jar:lib/jsr305-2.0.1.jar:lib/jetty-io-9.4.14.v20181114.jar:lib/jython-standalone-2.7.1.jar:lib/jetty-jmx-9.4.14.v20181114.jar:lib/jzlib-1.1.3.jar:lib/jetty-security-9.4.14.v20181114.jar:lib/metrics-core-2.1.3.jar:lib/keycloak-adapter-core-4.5.0.Final.jar:lib/keycloak-admin-client-4.5.0.Final.jar:lib/keycloak-servlet-adapter-spi-4.5.0.Final.jar:lib/keycloak-servlet-filter-adapter-4.5.0.Final.jar:lib/keycloak-spring-security-adapter-4.5.0.Final.jar:lib/kie-soup-maven-support-7.13.0.Final.jar:lib/kie-soup-project-datamodel-api-7.13.0.Final.jar:lib/kie-soup-project-datamodel-commons-7.13.0.Final.jar:lib/logging-interceptor-2.7.5.jar:lib/mchange-commons-java-0.2.3.4.jar:lib/microprofile-config-api-1.1.jar:lib/microprofile-rest-client-api-1.0.jar:lib/usertype.core-6.0.1.GA.jar:lib/mx4j-3.0.1.jar:lib/spring-tx-4.3.19.RELEASE.jar:lib/mx4j-tools-3.0.1.jar:lib/spring-web-4.3.19.RELEASE.jar:lib/nav-common-6.3.1.jar:lib/spring-webmvc-4.3.19.RELEASE.jar:lib/netty-3.10.6.Final.jar:lib/sqltool-2.3.1.jar:lib/netty-all-4.1.31.Final.jar:lib/spring-security-config-4.1.5.RELEASE.jar:lib/not-yet-commons-ssl-0.3.9.jar:lib/usertype.spi-6.0.1.GA.jar:lib/okhttp-2.7.5.jar:lib/velocity-1.7.jar:lib/okio-1.6.0.jar:lib/woodstox-core-asl-4.4.1.jar:lib/opensaml-2.6.1.jar:lib/xalan-2.7.2.jar:lib/openws-1.5.4.jar:lib/spring-core-4.3.19.RELEASE.jar:lib/org.osgi.annotation.versioning-1.0.0.jar:lib/spring-context-4.3.19.RELEASE.jar:lib/owasp-java-html-sanitizer-20180219.1.jar:lib/xercesImpl-2.10.0.jar:lib/paranamer-2.3.jar:lib/xml-apis-1.4.01.jar:lib/persist-6.3.1.jar:lib/sshj-0.15.0.jar:lib/postgresql-42.1.4.jre7.jar:lib/stax2-api-3.1.4.jar:lib/protobuf-java-2.6.1.jar:lib/xml-resolver-1.2.jar:lib/protocol-6.3.1.jar:lib/xmlpull-1.1.3.1.jar:lib/quartz-2.0.2.jar:lib/staxon-1.3.jar:lib/reactive-streams-1.0.2.jar:lib/staxon-jackson-1.3.jar:lib/reflections-0.9.9.jar:lib/spring-security-core-4.1.5.RELEASE.jar:lib/resteasy-client-3.5.1.Final.jar:lib/spring-ldap-core-2.2.0.RELEASE.jar:lib/resteasy-jaxb-provider-3.5.1.Final.jar:lib/spring-security-ldap-4.1.5.RELEASE.jar:lib/resteasy-jaxrs-3.5.1.Final.jar:lib/spring-expression-4.3.19.RELEASE.jar:lib/resteasy-multipart-provider-3.5.1.Final.jar:lib/xmlschema-core-2.2.2.jar:lib/rxjava-1.1.5.jar:lib/stringtemplate-3.2.1.jar:lib/scm-client-6.3.1.jar:lib/xmlsec-1.5.7.jar:lib/security-6.3.1.jar:lib/swagger-annotations-1.5.17.jar:lib/serializer-2.7.2.jar:lib/xmltooling-1.4.4.jar:lib/server-6.3.1.jar:lib/xpp3_min-1.1.4c.jar:lib/simple-4.1.21.jar:lib/xstream-1.4.10.jar:lib/slf4j-api-1.6.1.jar:lib/tsquery-6.3.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/ttorrent-core-1.5.jar:lib/snappy-java-1.0.4.1.jar:lib/snmp4j-1.11.3.jar:lib/twitter4j-core-4.0.4.jar:lib/snmp4j-agent-1.3.1.jar:lib/spring-security-saml2-core-1.0.2.RELEASE.jar:lib/spring-security-web-4.1.5.RELEASE.jar:lib/spring-aop-4.3.19.RELEASE.jar:lib/spring-beans-4.3.19.RELEASE.jar:lib/spring-security-kerberos-core-1.0.1.RELEASE.jar:lib/spring-security-kerberos-web-1.0.1.RELEASE.jar:lib/validation-api-1.1.0.Final.jar"
-        },
-        {
-          "key": "cmf.log.dir",
-          "value": "/var/log/cloudera-scm-server"
-        },
-        {
-          "key": "java.vm.vendor",
-          "value": "Oracle Corporation"
-        },
-        {
-          "key": "sun.arch.data.model",
-          "value": "64"
-        },
-        {
-          "key": "cmf.schema.dir",
-          "value": "/opt/cloudera/cm/schema"
-        },
-        {
-          "key": "java.vendor.url",
-          "value": "http://java.oracle.com/"
-        },
-        {
-          "key": "user.timezone",
-          "value": "Asia/Shanghai"
-        },
-        {
-          "key": "os.name",
-          "value": "Linux"
-        },
-        {
-          "key": "java.vm.specification.version",
-          "value": "1.8"
-        },
-        {
-          "key": "user.country",
-          "value": "US"
-        },
-        {
-          "key": "sun.java.launcher",
-          "value": "SUN_STANDARD"
-        },
-        {
-          "key": "sun.boot.library.path",
-          "value": "/usr/java/jdk1.8.0_181-cloudera/jre/lib/amd64"
-        },
-        {
-          "key": "sun.java.command",
-          "value": "com.cloudera.server.cmf.Main"
-        },
-        {
-          "key": "sun.cpu.endian",
-          "value": "little"
-        },
-        {
-          "key": "user.home",
-          "value": "/var/lib/cloudera-scm-server"
-        },
-        {
-          "key": "user.language",
-          "value": "en"
-        },
-        {
-          "key": "cmf.log.file",
-          "value": "cloudera-scm-server.log"
-        },
-        {
-          "key": "cmf.root.logger",
-          "value": "INFO,LOGFILE"
-        },
-        {
-          "key": "java.specification.vendor",
-          "value": "Oracle Corporation"
-        },
-        {
-          "key": "net.sf.ehcache.skipUpdateCheck",
-          "value": "true"
-        },
-        {
-          "key": "java.home",
-          "value": "/usr/java/jdk1.8.0_181-cloudera/jre"
-        },
-        {
-          "key": "file.separator",
-          "value": "/"
-        },
-        {
-          "key": "python.home",
-          "value": "/opt/cloudera/cm/python"
-        },
-        {
-          "key": "line.separator",
-          "value": "\n"
-        },
-        {
-          "key": "java.vm.specification.vendor",
-          "value": "Oracle Corporation"
-        },
-        {
-          "key": "java.specification.name",
-          "value": "Java Platform API Specification"
-        },
-        {
-          "key": "java.awt.graphicsenv",
-          "value": "sun.awt.X11GraphicsEnvironment"
-        },
-        {
-          "key": "java.awt.headless",
-          "value": "true"
-        },
-        {
-          "key": "org.apache.xml.security.ignoreLineBreaks",
-          "value": "true"
-        },
-        {
-          "key": "sun.boot.class.path",
-          "value": "/usr/java/jdk1.8.0_181-cloudera/jre/lib/resources.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/rt.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/sunrsasign.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jsse.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jce.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/charsets.jar:/usr/java/jdk1.8.0_181-cloudera/jre/lib/jfr.jar:/usr/java/jdk1.8.0_181-cloudera/jre/classes"
-        },
-        {
-          "key": "sun.management.compiler",
-          "value": "HotSpot 64-Bit Tiered Compilers"
-        },
-        {
-          "key": "org.owasp.esapi.SecurityConfiguration",
-          "value": "org.opensaml.ESAPISecurityConfig"
-        },
-        {
-          "key": "java.runtime.version",
-          "value": "1.8.0_181-b13"
-        },
-        {
-          "key": "java.net.preferIPv4Stack",
-          "value": "true"
-        },
-        {
-          "key": "user.name",
-          "value": "cloudera-scm"
-        },
-        {
-          "key": "path.separator",
-          "value": ":"
-        },
-        {
-          "key": "os.version",
-          "value": "3.10.0-1160.11.1.el7.x86_64"
-        },
-        {
-          "key": "java.endorsed.dirs",
-          "value": "/usr/java/jdk1.8.0_181-cloudera/jre/lib/endorsed"
-        },
-        {
-          "key": "java.runtime.name",
-          "value": "Java(TM) SE Runtime Environment"
-        },
-        {
-          "key": "file.encoding",
-          "value": "UTF-8"
-        },
-        {
-          "key": "sun.nio.ch.bugLevel",
-          "value": ""
-        },
-        {
-          "key": "java.vm.name",
-          "value": "Java HotSpot(TM) 64-Bit Server VM"
-        },
-        {
-          "key": "python.console.encoding",
-          "value": "UTF-8"
-        },
-        {
-          "key": "jetty.git.hash",
-          "value": "c4550056e785fb5665914545889f21dc136ad9e6"
-        },
-        {
-          "key": "java.vendor.url.bug",
-          "value": "http://bugreport.sun.com/bugreport/"
-        },
-        {
-          "key": "java.io.tmpdir",
-          "value": "/tmp"
-        },
-        {
-          "key": "java.version",
-          "value": "1.8.0_181"
-        },
-        {
-          "key": "user.dir",
-          "value": "/opt/cloudera/cm"
-        },
-        {
-          "key": "os.arch",
-          "value": "amd64"
-        },
-        {
-          "key": "java.vm.specification.name",
-          "value": "Java Virtual Machine Specification"
-        },
-        {
-          "key": "mvel.debugger",
-          "value": "false"
-        },
-        {
-          "key": "java.awt.printerjob",
-          "value": "sun.print.PSPrinterJob"
-        },
-        {
-          "key": "sun.os.patch.level",
-          "value": "unknown"
-        },
-        {
-          "key": "python.cachedir.skip",
-          "value": "true"
-        },
-        {
-          "key": "java.library.path",
-          "value": "/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"
-        },
-        {
-          "key": "java.vm.info",
-          "value": "mixed mode"
-        },
-        {
-          "key": "java.vendor",
-          "value": "Oracle Corporation"
-        },
-        {
-          "key": "java.vm.version",
-          "value": "25.181-b13"
-        },
-        {
-          "key": "drools.dialect.java.compiler.lnglevel",
-          "value": "1.7"
-        },
-        {
-          "key": "java.ext.dirs",
-          "value": "/usr/java/jdk1.8.0_181-cloudera/jre/lib/ext:/usr/java/packages/lib/ext"
-        },
-        {
-          "key": "sun.io.unicode.encoding",
-          "value": "UnicodeLittle"
-        },
-        {
-          "key": "java.class.version",
-          "value": "52.0"
-        },
-        {
-          "key": "cmf.jetty.threshhold",
-          "value": "WARN"
+      "parameters": [
+        {
+          "name": "security.config-file",
+          "label": "security.config-file",
+          "description": "security.config-file",
+          "configName": "security.config-file",
+          "required": "false",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": ""
+        },
+        {
+          "name": "hive_auth",
+          "label": "hive_auth",
+          "description": "hive_auth",
+          "configName": "hive_auth",
+          "required": "true",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "http-server.https.keystore.key",
+          "label": "http-server.https.keystore.key",
+          "description": "http-server.https.keystore.key",
+          "configName": "http-server.https.keystore.key",
+          "required": "false",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "http-server.https.port",
+          "label": "http-server.https.port",
+          "description": "http-server.https.port",
+          "configName": "http-server.https.port",
+          "required": "false",
+          "type": "port",
+          "default": 7778
+        },
+        {
+          "name": "http-server.https.keystore.path",
+          "label": "http-server.https.keystore.path",
+          "description": "http-server.https.keystore.path",
+          "configName": "http-server.https.keystore.path",
+          "required": "false",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": ""
+        },
+        {
+          "name": "client_kerberos",
+          "label": "client_kerberos",
+          "description": "if client must kerberos",
+          "configName": "client_kerberos",
+          "required": "true",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "node.data-dir",
+          "label": "node.data-dir",
+          "description": "node.data-dir",
+          "configName": "node.data-dir",
+          "required": "true",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": "/data"
+        },
+        {
+          "name": "query.max-memory",
+          "label": "query.max-memory",
+          "description": "query.max-memory",
+          "configName": "query.max-memory",
+          "required": "true",
+          "type": "string",
+          "default": "4GB"
+        },
+        {
+          "name": "query.max-memory-per-node",
+          "label": "query.max-memory-per-node",
+          "description": "query.max-memory-per-node",
+          "configName": "query.max-memory-per-node",
+          "required": "true",
+          "type": "string",
+          "default": "1GB"
+        },
+        {
+          "name": "jvm_config",
+          "label": "jvm_config",
+          "description": "jvm_config",
+          "configName": "jvm.config",
+          "required": "true",
+          "type": "string_array",
+          "separator": ";",
+          "default": [
+            "-server",
+            "-Xmx16G",
+            "-XX:+UseConcMarkSweepGC",
+            "-XX:+ExplicitGCInvokesConcurrent",
+            "-XX:+AggressiveOpts",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-XX:OnOutOfMemoryError=kill -9 %p"
+          ]
         }
       ],
-      "Name": "5271@cdh1.ikcrm.com",
-      "ClassPath": ".:/usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:lib/cxf-core-3.1.12.jar:lib/Saxon-HE-9.5.1-1.jar:lib/cxf-rt-frontend-jaxrs-3.1.12.jar:lib/activation-1.1.1.jar:lib/flume-ng-sdk-1.2.0.jar:lib/agent-6.3.1.jar:lib/gson-2.2.jar:lib/alarms-6.3.1.jar:lib/dom4j-1.6.1.jar:lib/alertpublisher-6.3.1.jar:lib/guava-14.0.jar:lib/alfredo-0.1.4.jar:lib/drools-compiler-7.13.0.Final.jar:lib/annotations-2.0.1.jar:lib/headlamp-6.3.1.jar:lib/ant-1.9.6.jar:lib/drools-core-7.13.0.Final.jar:lib/ant-launcher-1.9.6.jar:lib/hsqldb-2.3.1.jar:lib/antlr-2.7.7.jar:lib/drools-templates-7.13.0.Final.jar:lib/antlr-runtime-3.3.jar:lib/httpclient-4.5.6.jar:lib/aopalliance-1.0.jar:lib/ecc-25519-java-1.0.1.jar:lib/apache-mime4j-0.6.jar:lib/jamon-api-2.3.1.jar:lib/asm-5.2.jar:lib/httpcore-4.4.10.jar:lib/aspectjrt-1.9.2.jar:lib/ecj-4.3.1.jar:lib/aspectjtools-1.9.2.jar:lib/commons-httpclient-3.1.jar:lib/async-http-client-1.9.40.jar:lib/ehcache-2.10.3.jar:lib/avro-1.7.6-cdh5.12.0.jar:lib/commons-io-2.4.jar:lib/jta-1.1.jar:lib/avro-ipc-1.7.6-cdh5.12.0.jar:lib/el-api-2.2.jar:lib/bcpg-jdk15on-1.51.jar:lib/enunciate-core-2.7.0.jar:lib/bcpkix-jdk15on-1.51.jar:lib/enunciate-core-annotations-2.7.0.jar:lib/bcprov-jdk15on-1.51.jar:lib/ini4j-0.5.1.jar:lib/c3p0-0.9.2.1.jar:lib/enunciate-javac-support-2.7.0.jar:lib/camel-core-2.19.2.jar:lib/esapi-2.0.1.jar:lib/camel-mail-2.19.2.jar:lib/event-common-6.3.1.jar:lib/cdh-client-6.3.1.jar:lib/inspector-6.3.1.jar:lib/cdi-api-1.1.jar:lib/jackson-core-2.9.8.jar:lib/cglib-3.2.2.jar:lib/jackson-core-asl-1.9.13.jar:lib/classmate-1.1.0.jar:lib/commons-lang-2.6.jar:lib/cloudera-manager-api-6.3.1.jar:lib/commons-logging-1.1.1.jar:lib/cloudera-manager-schema-6.3.1.jar:lib/jackson-databind-2.9.8.jar:lib/common-6.3.1.jar:lib/event-publish-6.3.1.jar:lib/common-thrifts-6.3.1.jar:lib/event-query-6.3.1.jar:lib/commons-beanutils-1.9.3.jar:lib/commons-fileupload-1.3.3.jar:lib/poi-3.16.jar:lib/commons-cli-1.3-cloudera-pre-r1439998.jar:lib/eventcatcher-6.3.1.jar:lib/commons-codec-1.8.jar:lib/commons-math-2.2.jar:lib/commons-collections-3.2.2.jar:lib/compiler-0.8.12.jar:lib/commons-collections4-4.2.jar:lib/firehose-6.3.1.jar:lib/commons-compress-1.18.jar:lib/debug-6.3.1.jar:lib/commons-configuration-1.9.jar:lib/firehose-client-6.3.1.jar:lib/commons-dbutils-1.4.jar:lib/core-3.2.1.jar:lib/cxf-rt-rs-client-3.1.12.jar:lib/db-common-6.3.1.jar:lib/jamonapi-2.73.jar:lib/cxf-rt-rs-extension-providers-3.1.12.jar:lib/descriptors-6.3.1.jar:lib/cxf-rt-transports-http-3.1.12.jar:lib/diffutils-1.2.1.jar:lib/cxf-rt-transports-local-3.1.12.jar:lib/javassist-3.20.0-GA.jar:lib/javase-3.2.1.jar:lib/flume-ng-configuration-1.2.0.jar:lib/geronimo-jta_1.1_spec-1.1.1.jar:lib/hibernate-c3p0-5.2.4.Final.jar:lib/hibernate-commons-annotations-5.0.1.Final.jar:lib/hibernate-core-5.2.4.Final.jar:lib/hibernate-ehcache-5.2.4.Final.jar:lib/hibernate-entitymanager-5.2.4.Final.jar:lib/hibernate-envers-5.2.4.Final.jar:lib/hibernate-jpa-2.1-api-1.0.0.Final.jar:lib/hibernate-validator-5.2.4.Final.jar:lib/hue-plugins-3.9.0-cdh5.14.0.jar:lib/impala-profile-extractor-6.3.1.jar:lib/jackson-annotations-2.9.8.jar:lib/jackson-dataformat-csv-2.9.8.jar:lib/jackson-datatype-joda-2.9.8.jar:lib/jackson-jaxrs-1.9.13.jar:lib/jackson-jaxrs-base-2.9.8.jar:lib/jackson-jaxrs-json-provider-2.9.8.jar:lib/jackson-mapper-asl-1.9.13-cloudera.1.jar:lib/jackson-module-jaxb-annotations-2.9.8.jar:lib/jackson-module-mrbean-2.9.8.jar:lib/jackson-xc-1.9.13.jar:lib/jamon-processor-2.4.2.jar:lib/jamon-runtime-2.4.1.jar:lib/jandex-2.0.0.Final.jar:lib/java-xmlbuilder-0.4.jar:lib/libthrift-0.12.0.jar:lib/javatuples-1.2.jar:lib/jetty-webapp-9.4.14.v20181114.jar:lib/javax.activation-api-1.2.0.jar:lib/jetty-xml-9.4.14.v20181114.jar:lib/javax.annotation-api-1.2.jar:lib/log4j-1.2.16.jar:lib/javax.inject-1.jar:lib/keycloak-adapter-spi-4.5.0.Final.jar:lib/javax.json-1.0.4.jar:lib/keycloak-common-4.5.0.Final.jar:lib/javax.json.bind-api-1.0.jar:lib/keycloak-core-4.5.0.Final.jar:lib/javax.mail-1.5.5.jar:lib/keycloak-services-4.5.0.Final.jar:lib/javax.mail-api-1.5.6.jar:lib/kie-api-7.13.0.Final.jar:lib/javax.servlet-api-4.0.1.jar:lib/kie-internal-7.13.0.Final.jar:lib/javax.ws.rs-api-2.0.1.jar:lib/jgrapht-core-0.9.1.jar:lib/javax.xml.soap-api-1.4.0.jar:lib/joda-time-2.7.jar:lib/jaxb-api-2.4.0-b180830.0359.jar:lib/kie-soup-commons-7.13.0.Final.jar:lib/jaxb-core-2.3.0.1.jar:lib/jopt-simple-3.2.jar:lib/jaxb-impl-2.4.0-b180830.0438.jar:lib/log4j-api-2.8.2.jar:lib/jaxp-api-1.4.jar:lib/log4j-core-2.8.2.jar:lib/jaxws-api-2.3.1.jar:lib/mvel2-2.4.2.Final.jar:lib/model-6.3.1.jar:lib/jboss-annotations-api_1.2_spec-1.0.0.Final.jar:lib/jetty-server-9.4.14.v20181114.jar:lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar:lib/jsoup-1.10.3.jar:lib/jboss-logging-3.3.0.Final.jar:lib/jetty-servlet-9.4.14.v20181114.jar:lib/jboss-transaction-api_1.2_spec-1.0.1.Final.jar:lib/leveldbjni-all-1.8.jar:lib/jcip-annotations-1.0.jar:lib/logredactor-2.0.6.jar:lib/jcommander-1.30.jar:lib/lucene-core-3.4.0.jar:lib/jdbcdslog-1.0.6.jar:lib/mail-1.4.3.jar:lib/jets3t-0.9.0.jar:lib/jetty-util-9.4.14.v20181114.jar:lib/jetty-continuation-9.4.14.v20181114.jar:lib/jsr250-api-1.0.jar:lib/jetty-http-9.4.14.v20181114.jar:lib/jsr305-2.0.1.jar:lib/jetty-io-9.4.14.v20181114.jar:lib/jython-standalone-2.7.1.jar:lib/jetty-jmx-9.4.14.v20181114.jar:lib/jzlib-1.1.3.jar:lib/jetty-security-9.4.14.v20181114.jar:lib/metrics-core-2.1.3.jar:lib/keycloak-adapter-core-4.5.0.Final.jar:lib/keycloak-admin-client-4.5.0.Final.jar:lib/keycloak-servlet-adapter-spi-4.5.0.Final.jar:lib/keycloak-servlet-filter-adapter-4.5.0.Final.jar:lib/keycloak-spring-security-adapter-4.5.0.Final.jar:lib/kie-soup-maven-support-7.13.0.Final.jar:lib/kie-soup-project-datamodel-api-7.13.0.Final.jar:lib/kie-soup-project-datamodel-commons-7.13.0.Final.jar:lib/logging-interceptor-2.7.5.jar:lib/mchange-commons-java-0.2.3.4.jar:lib/microprofile-config-api-1.1.jar:lib/microprofile-rest-client-api-1.0.jar:lib/usertype.core-6.0.1.GA.jar:lib/mx4j-3.0.1.jar:lib/spring-tx-4.3.19.RELEASE.jar:lib/mx4j-tools-3.0.1.jar:lib/spring-web-4.3.19.RELEASE.jar:lib/nav-common-6.3.1.jar:lib/spring-webmvc-4.3.19.RELEASE.jar:lib/netty-3.10.6.Final.jar:lib/sqltool-2.3.1.jar:lib/netty-all-4.1.31.Final.jar:lib/spring-security-config-4.1.5.RELEASE.jar:lib/not-yet-commons-ssl-0.3.9.jar:lib/usertype.spi-6.0.1.GA.jar:lib/okhttp-2.7.5.jar:lib/velocity-1.7.jar:lib/okio-1.6.0.jar:lib/woodstox-core-asl-4.4.1.jar:lib/opensaml-2.6.1.jar:lib/xalan-2.7.2.jar:lib/openws-1.5.4.jar:lib/spring-core-4.3.19.RELEASE.jar:lib/org.osgi.annotation.versioning-1.0.0.jar:lib/spring-context-4.3.19.RELEASE.jar:lib/owasp-java-html-sanitizer-20180219.1.jar:lib/xercesImpl-2.10.0.jar:lib/paranamer-2.3.jar:lib/xml-apis-1.4.01.jar:lib/persist-6.3.1.jar:lib/sshj-0.15.0.jar:lib/postgresql-42.1.4.jre7.jar:lib/stax2-api-3.1.4.jar:lib/protobuf-java-2.6.1.jar:lib/xml-resolver-1.2.jar:lib/protocol-6.3.1.jar:lib/xmlpull-1.1.3.1.jar:lib/quartz-2.0.2.jar:lib/staxon-1.3.jar:lib/reactive-streams-1.0.2.jar:lib/staxon-jackson-1.3.jar:lib/reflections-0.9.9.jar:lib/spring-security-core-4.1.5.RELEASE.jar:lib/resteasy-client-3.5.1.Final.jar:lib/spring-ldap-core-2.2.0.RELEASE.jar:lib/resteasy-jaxb-provider-3.5.1.Final.jar:lib/spring-security-ldap-4.1.5.RELEASE.jar:lib/resteasy-jaxrs-3.5.1.Final.jar:lib/spring-expression-4.3.19.RELEASE.jar:lib/resteasy-multipart-provider-3.5.1.Final.jar:lib/xmlschema-core-2.2.2.jar:lib/rxjava-1.1.5.jar:lib/stringtemplate-3.2.1.jar:lib/scm-client-6.3.1.jar:lib/xmlsec-1.5.7.jar:lib/security-6.3.1.jar:lib/swagger-annotations-1.5.17.jar:lib/serializer-2.7.2.jar:lib/xmltooling-1.4.4.jar:lib/server-6.3.1.jar:lib/xpp3_min-1.1.4c.jar:lib/simple-4.1.21.jar:lib/xstream-1.4.10.jar:lib/slf4j-api-1.6.1.jar:lib/tsquery-6.3.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/ttorrent-core-1.5.jar:lib/snappy-java-1.0.4.1.jar:lib/snmp4j-1.11.3.jar:lib/twitter4j-core-4.0.4.jar:lib/snmp4j-agent-1.3.1.jar:lib/spring-security-saml2-core-1.0.2.RELEASE.jar:lib/spring-security-web-4.1.5.RELEASE.jar:lib/spring-aop-4.3.19.RELEASE.jar:lib/spring-beans-4.3.19.RELEASE.jar:lib/spring-security-kerberos-core-1.0.1.RELEASE.jar:lib/spring-security-kerberos-web-1.0.1.RELEASE.jar:lib/validation-api-1.1.0.Final.jar",
-      "InputArguments": [
-        "-Dlog4j.configuration=file:/etc/cloudera-scm-server/log4j.properties",
-        "-Dfile.encoding=UTF-8",
-        "-Dcmf.root.logger=INFO,LOGFILE",
-        "-Dcmf.log.dir=/var/log/cloudera-scm-server",
-        "-Dcmf.log.file=cloudera-scm-server.log",
-        "-Dcmf.jetty.threshhold=WARN",
-        "-Dcmf.schema.dir=/opt/cloudera/cm/schema",
-        "-Djava.awt.headless=true",
-        "-Djava.net.preferIPv4Stack=true",
-        "-Dpython.home=/opt/cloudera/cm/python",
-        "-XX:+HeapDumpOnOutOfMemoryError",
-        "-Xmx2G",
-        "-XX:MaxPermSize=256m",
-        "-XX:+HeapDumpOnOutOfMemoryError",
-        "-XX:HeapDumpPath=/tmp",
-        "-XX:+UseConcMarkSweepGC",
-        "-XX:+UseParNewGC",
-        "-XX:OnOutOfMemoryError=kill -9 %p"
-      ],
-      "StartTime": 1626264882046,
-      "ObjectName": "java.lang:type=Runtime"
-    },
-    {
-      "name": "com.cloudera.server.common:type=boundedqueuedthreadpool,id=0",
-      "modelerType": "com.cloudera.server.common.BoundedQueuedThreadPool",
-      "threadsPriority": 5,
-      "lowOnThreads": false,
-      "queueSize": 0,
-      "stopTimeout": 30000,
-      "minThreads": 8,
-      "detailedDump": false,
-      "threads": 8,
-      "reservedThreads": 10,
-      "daemon": true,
-      "busyThreads": 2,
-      "lowThreadsThreshold": 1,
-      "idleTimeout": 60000,
-      "name": "scm-web",
-      "idleThreads": 3,
-      "state": "STARTED",
-      "maxThreads": 100
-    },
-    {
-      "name": "sun.nio.ch:context=HTTP/1.1@55a9a0ba,type=serversocketchannelimpl,id=0",
-      "modelerType": "sun.nio.ch.ServerSocketChannelImpl"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=ImpalaController,name=executingQueriesQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.mchange.v2.c3p0:type=C3P0Registry",
-      "modelerType": "com.mchange.v2.c3p0.management.C3P0RegistryManager",
-      "NumPooledDataSources": 1,
-      "NumPoolsAllDataSources": 1,
-      "AllPooledDataSources": "[com.mchange.v2.c3p0.PoolBackedDataSource@6c8a18e1 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|3afae281, numHelperThreads -> 3 ]]",
-      "AllIdentityTokenCount": 3,
-      "AllIdentityTokenizedCount": 3,
-      "AllPooledDataSourcesCount": 1,
-      "AllIdentityTokens": [
-        "2ryr5uai19rjovd1md69ig|1f443fae",
-        "2ryr5uai19rjovd1md69ig|3afae281",
-        "2ryr5uai19rjovd1md69ig|52a70627"
-      ],
-      "C3p0Version": "0.9.2.1",
-      "AllIdentityTokenized": "[com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], com.mchange.v2.c3p0.PoolBackedDataSource@6c8a18e1 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|3afae281, numHelperThreads -> 3 ], com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ]]",
-      "AllIdentityTokenizedStringified": [
-        "com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ]",
-        "com.mchange.v2.c3p0.PoolBackedDataSource@6c8a18e1 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|3afae281, numHelperThreads -> 3 ]",
-        "com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ]"
-      ],
-      "AllPooledDataSourcesStringified": [
-        "com.mchange.v2.c3p0.PoolBackedDataSource@6c8a18e1 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@5dfcbfb2 [ acquireIncrement -> 3, acquireRetryAttempts -> 5, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 20000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 2ryr5uai19rjovd1md69ig|52a70627, idleConnectionTestPeriod -> 300, initialPoolSize -> 5, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 50, maxStatements -> 2500, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@8bafad44 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|1f443fae, jdbcUrl -> jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8, properties -> {user=******, password=******} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 2ryr5uai19rjovd1md69ig|3afae281, numHelperThreads -> 3 ]"
-      ]
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=DescriptorController,name=configDescriptorGenerationDurationMs",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.home:type=SystemHealth,name=generate-health-info-duration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 158,
-      "Min": 35.0,
-      "Max": 80.0,
-      "50thPercentile": 41.0,
-      "Mean": 41.94303797468354,
-      "StdDev": 4.76751704112342,
-      "75thPercentile": 43.0,
-      "95thPercentile": 49.0,
-      "98thPercentile": 52.81999999999999,
-      "99thPercentile": 64.06999999999991,
-      "999thPercentile": 80.0
-    },
-    {
-      "name": "java.lang:type=ClassLoading",
-      "modelerType": "sun.management.ClassLoadingImpl",
-      "LoadedClassCount": 33929,
-      "UnloadedClassCount": 1170,
-      "TotalLoadedClassCount": 35099,
-      "Verbose": false,
-      "ObjectName": "java.lang:type=ClassLoading"
-    },
-    {
-      "name": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=httpconnectionfactory,id=0",
-      "modelerType": "org.eclipse.jetty.server.HttpConnectionFactory",
-      "protocol": "HTTP/1.1",
-      "stopTimeout": 30000,
-      "state": "STARTED",
-      "inputBufferSize": 8192
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=CommandPusherThread,name=commands_retried",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=YarnController,name=applicationDetailsQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=YarnController,name=storedApplicationInfoDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "org.apache.logging.log4j2:type=67f89fa3,component=Appenders,name=DefaultConsole-2",
-      "modelerType": "org.apache.logging.log4j.core.jmx.AppenderAdmin",
-      "Name": "DefaultConsole-2",
-      "Layout": "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n",
-      "Filter": "null",
-      "ErrorHandler": "org.apache.logging.log4j.core.appender.DefaultErrorHandler@6c479bde",
-      "IgnoreExceptions": true
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=CommandPusherThread,name=commands_hard_stopped",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "org.eclipse.jetty.server.session:context=ROOT,type=defaultsessioncache,id=0",
-      "modelerType": "org.eclipse.jetty.server.session.DefaultSessionCache",
-      "removeUnloadableSessions": false,
-      "sessionsMax": 3033,
-      "stopTimeout": 30000,
-      "sessionsTotal": 55079,
-      "state": "STARTED",
-      "saveOnInactiveEviction": false,
-      "saveOnCreate": false,
-      "evictionPolicy": -1,
-      "sessionsCurrent": 2784
-    },
-    {
-      "name": "java.lang:type=MemoryPool,name=Metaspace",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 228651008,
-        "init": 0,
-        "max": -1,
-        "used": 217320280
-      },
-      "PeakUsage": {
-        "committed": 228651008,
-        "init": 0,
-        "max": -1,
-        "used": 217320280
-      },
-      "MemoryManagerNames": [
-        "Metaspace Manager"
-      ],
-      "UsageThreshold": 0,
-      "UsageThresholdExceeded": false,
-      "UsageThresholdCount": 0,
-      "UsageThresholdSupported": true,
-      "CollectionUsage": null,
-      "CollectionUsageThresholdSupported": false,
-      "Name": "Metaspace",
-      "Type": "NON_HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=Metaspace"
-    },
-    {
-      "name": "com.cloudera.enterprise.debug:type=JvmPauseMonitor,name=pauseTimeMs",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 9223
-    },
-    {
-      "name": "org.eclipse.jetty.server.session:type=defaultsessionidmanager,id=0",
-      "modelerType": "org.eclipse.jetty.server.session.DefaultSessionIdManager",
-      "stopTimeout": 30000,
-      "state": "STARTED",
-      "workerName": "node0"
-    },
-    {
-      "name": "org.eclipse.jetty.io:context=HTTP/1.1@55a9a0ba,type=arraybytebufferpool,id=0",
-      "modelerType": "org.eclipse.jetty.io.ArrayByteBufferPool"
-    },
-    {
-      "name": "com.cloudera.cmf.service.auth:type=AuthServiceLoginMonitor,name=loginCounter",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "java.lang:type=GarbageCollector,name=ParNew",
-      "modelerType": "sun.management.GarbageCollectorImpl",
-      "LastGcInfo": {
-        "GcThreadCount": 30,
-        "duration": 5,
-        "endTime": 68337315,
-        "id": 1093,
-        "memoryUsageAfterGc": [
+      "configWriter": {
+        "generators": [
           {
-            "key": "Par Survivor Space",
-            "value": {
-              "committed": 71565312,
-              "init": 35127296,
-              "max": 71565312,
-              "used": 20295328
-            }
+            "filename": "etc/config.properties",
+            "configFormat": "properties",
+            "includedParams": [
+              "discovery_uri",
+              "coordinator_webui_port",
+              "query.max-memory",
+              "query.max-memory-per-node"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "coordinator",
+                "value": "true"
+              },
+              {
+                "key": "discovery-server.enabled",
+                "value": "true"
+              },
+              {
+                "key": "node-scheduler.include-coordinator",
+                "value": "false"
+              }
+            ]
           },
           {
-            "key": "Compressed Class Space",
-            "value": {
-              "committed": 29523968,
-              "init": 0,
-              "max": 1073741824,
-              "used": 27657088
-            }
+            "filename": "etc/client_kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "http-server.https.port",
+              "http-server.https.keystore.path",
+              "http-server.https.keystore.key"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "http-server.https.enabled",
+                "value": "true"
+              }
+            ]
           },
           {
-            "key": "Metaspace",
-            "value": {
-              "committed": 228651008,
-              "init": 0,
-              "max": -1,
-              "used": 217320280
-            }
+            "filename": "etc/catalog/hive.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "connector.name",
+                "value": "hive-hadoop2"
+              },
+              {
+                "key": "hive.metastore.uri",
+                "value": "thrift://${hive_metastore_host}:${hive_metastore_port}"
+              }
+            ]
           },
           {
-            "key": "Code Cache",
-            "value": {
-              "committed": 151322624,
-              "init": 2555904,
-              "max": 251658240,
-              "used": 150151680
-            }
+            "filename": "etc/jvm.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "jvm_config"
+            ]
           },
           {
-            "key": "Par Eden Space",
-            "value": {
-              "committed": 572653568,
-              "init": 281346048,
-              "max": 572653568,
-              "used": 0
-            }
+            "filename": "etc/node.properties.dummy",
+            "configFormat": "properties",
+            "includedParams": [
+              "node.data-dir"
+            ]
           },
           {
-            "key": "CMS Old Gen",
-            "value": {
-              "committed": 1431699456,
-              "init": 703266816,
-              "max": 1431699456,
-              "used": 810029072
-            }
+            "filename": "etc/kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "hive_kerberos",
+              "kerberos_realm",
+              "hive_metastore_host",
+              "client_kerberos",
+              "hive_auth"
+            ]
+          },
+          {
+            "filename": "etc/hive_auth.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "security.config-file"
+            ]
           }
-        ],
-        "memoryUsageBeforeGc": [
+        ]
+      }
+    },
+    {
+      "name": "PRESTO_WORKER",
+      "label": "Worker",
+      "pluralLabel": "Workers",
+      "startRunner": {
+        "program": "scripts/control-worker.sh"
+      },
+      "logging": {
+        "dir": "/var/log/presto",
+        "filename": "presto-server.log",
+        "modifiable": true,
+        "configName": "log.dir",
+        "loggingType": "log4j"
+      },
+      "kerberosPrincipals": [
+        {
+          "name": "presto",
+          "primary": "presto",
+          "instance": "${host}"
+        }
+      ],
+      "topology": {
+        "minInstances": 1
+      },
+      "parameters": [
+        {
+          "name": "jvm_config",
+          "label": "jvm_config",
+          "description": "jvm_config",
+          "configName": "jvm.config",
+          "required": "true",
+          "type": "string_array",
+          "separator": ";",
+          "default": [
+            "-server",
+            "-Xmx16G",
+            "-XX:+UseConcMarkSweepGC",
+            "-XX:+ExplicitGCInvokesConcurrent",
+            "-XX:+AggressiveOpts",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-XX:OnOutOfMemoryError=kill -9 %p"
+          ]
+        },
+        {
+          "name": "node.data-dir",
+          "label": "node.data-dir",
+          "description": "node.data-dir",
+          "configName": "node.data-dir",
+          "required": "true",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": "/data"
+        }
+      ],
+      "configWriter": {
+        "generators": [
           {
-            "key": "Par Survivor Space",
-            "value": {
-              "committed": 71565312,
-              "init": 35127296,
-              "max": 71565312,
-              "used": 23903904
-            }
+            "filename": "etc/config.properties",
+            "configFormat": "properties",
+            "includedParams": [
+              "discovery_uri",
+              "coordinator_webui_port"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "coordinator",
+                "value": "false"
+              },
+              {
+                "key": "node-scheduler.include-coordinator",
+                "value": "false"
+              }
+            ]
           },
           {
-            "key": "Compressed Class Space",
-            "value": {
-              "committed": 29523968,
-              "init": 0,
-              "max": 1073741824,
-              "used": 27657088
-            }
+            "filename": "etc/catalog/hive.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "connector.name",
+                "value": "hive-hadoop2"
+              },
+              {
+                "key": "hive.metastore.uri",
+                "value": "thrift://${hive_metastore_host}:${hive_metastore_port}"
+              }
+            ]
           },
           {
-            "key": "Metaspace",
-            "value": {
-              "committed": 228651008,
-              "init": 0,
-              "max": -1,
-              "used": 217320280
-            }
+            "filename": "etc/jvm.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "jvm_config"
+            ]
           },
           {
-            "key": "Code Cache",
-            "value": {
-              "committed": 151322624,
-              "init": 2555904,
-              "max": 251658240,
-              "used": 150151680
-            }
+            "filename": "etc/node.properties.dummy",
+            "configFormat": "properties",
+            "includedParams": [
+              "node.data-dir"
+            ]
           },
           {
-            "key": "Par Eden Space",
-            "value": {
-              "committed": 572653568,
-              "init": 281346048,
-              "max": 572653568,
-              "used": 572653568
-            }
-          },
-          {
-            "key": "CMS Old Gen",
-            "value": {
-              "committed": 1431699456,
-              "init": 703266816,
-              "max": 1431699456,
-              "used": 809042336
-            }
+            "filename": "etc/kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "hive_kerberos",
+              "kerberos_realm",
+              "hive_metastore_host"
+            ]
           }
-        ],
-        "startTime": 68337310
-      },
-      "CollectionCount": 1093,
-      "CollectionTime": 8182,
-      "Valid": true,
-      "MemoryPoolNames": [
-        "Par Eden Space",
-        "Par Survivor Space"
-      ],
-      "Name": "ParNew",
-      "ObjectName": "java.lang:type=GarbageCollector,name=ParNew"
-    },
-    {
-      "name": "org.apache.logging.log4j2:type=67f89fa3",
-      "modelerType": "org.apache.logging.log4j.core.jmx.LoggerContextAdmin",
-      "ObjectName": "org.apache.logging.log4j2:type=67f89fa3",
-      "Name": "67f89fa3",
-      "Status": "STARTED",
-      "ConfigLocationUri": "file:/opt/cloudera/cm/Default@5a5338df",
-      "ConfigText": "",
-      "ConfigName": "Default@5a5338df",
-      "ConfigClassName": "org.apache.logging.log4j.core.config.DefaultConfiguration",
-      "ConfigFilter": "null",
-      "ConfigProperties": "{hostName=cdh1.ikcrm.com, contextName=67f89fa3}"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.search.components:type=SearchRepositoryManager,name=indexSearch",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Timer",
-      "LatencyUnit": "MILLISECONDS",
-      "RateUnit": "SECONDS",
-      "MeanRate": 0.0,
-      "OneMinuteRate": 0.0,
-      "FiveMinuteRate": 0.0,
-      "FifteenMinuteRate": 0.0,
-      "EventType": "calls",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "java.util.concurrent:type=concurrenthashmap,id=0",
-      "modelerType": "java.util.concurrent.ConcurrentHashMap"
-    },
-    {
-      "name": "com.mchange.v2.c3p0:type=PooledDataSource,identityToken=2ryr5uai19rjovd1md69ig|3afae281,name=2ryr5uai19rjovd1md69ig|3afae281",
-      "modelerType": "com.mchange.v2.c3p0.management.DynamicPooledDataSourceManagerMBean",
-      "driverClass": null,
-      "numConnectionsDefaultUser": 23,
-      "numFailedCheckoutsDefaultUser": 0,
-      "usesTraditionalReflectiveProxies": false,
-      "userOverrides": "{}",
-      "numBusyConnectionsAllUsers": 0,
-      "statementCacheNumConnectionsWithCachedStatementsDefaultUser": 21,
-      "dataSourceName": "2ryr5uai19rjovd1md69ig|3afae281",
-      "statementDestroyerNumConnectionsInUseDefaultUser": -1,
-      "minPoolSize": 5,
-      "numBusyConnectionsDefaultUser": 0,
-      "overrideDefaultUser": null,
-      "numConnectionsAllUsers": 23,
-      "allUsers": "[scm]",
-      "statementDestroyerNumTasksPending": -1,
-      "description": null,
-      "overrideDefaultPassword": null,
-      "connectionCustomizerClassName": null,
-      "automaticTestTable": null,
-      "loginTimeout": 0,
-      "statementDestroyerNumConnectionsInUseAllUsers": -1,
-      "acquireIncrement": 3,
-      "statementCacheNumCheckedOutDefaultUser": 0,
-      "statementCacheNumDeferredCloseThreads": 0,
-      "preferredTestQuery": null,
-      "numFailedIdleTestsDefaultUser": 0,
-      "checkoutTimeout": 20000,
-      "maxStatements": 2500,
-      "threadPoolSize": 3,
-      "statementDestroyerNumActiveThreads": -1,
-      "forceIgnoreUnresolvedTransactions": false,
-      "statementCacheNumStatementsDefaultUser": 2160,
-      "numIdleConnections": 23,
-      "unreturnedConnectionTimeout": 0,
-      "statementDestroyerNumDeferredDestroyStatementsDefaultUser": -1,
-      "numUnclosedOrphanedConnections": 0,
-      "maxPoolSize": 50,
-      "numBusyConnections": 0,
-      "identityToken": "2ryr5uai19rjovd1md69ig|3afae281",
-      "acquireRetryDelay": 1000,
-      "statementCacheNumConnectionsWithCachedStatementsAllUsers": 21,
-      "effectivePropertyCycleDefaultUser": 0.0,
-      "numIdleConnectionsDefaultUser": 23,
-      "maxAdministrativeTaskTime": 0,
-      "testConnectionOnCheckout": false,
-      "numUserPools": 1,
-      "propertyChangeListeners": [
-        "com.mchange.v2.c3p0.management.DynamicPooledDataSourceManagerMBean$1@4c743a3b",
-        "com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource$1@1764b201"
-      ],
-      "numUnclosedOrphanedConnectionsDefaultUser": 0,
-      "threadPoolNumTasksPending": 0,
-      "statementCacheNumStatementsAllUsers": 2160,
-      "upTimeMillisDefaultUser": 68402840,
-      "propertyCycle": 0,
-      "statementDestroyerNumIdleThreads": -1,
-      "numHelperThreads": 3,
-      "idleConnectionTestPeriod": 300,
-      "debugUnreturnedConnectionStackTraces": false,
-      "breakAfterAcquireFailure": false,
-      "statementDestroyerNumDeferredDestroyStatementsAllUsers": -1,
-      "numFailedCheckinsDefaultUser": 0,
-      "numUnclosedOrphanedConnectionsAllUsers": 0,
-      "numIdleConnectionsAllUsers": 23,
-      "numThreadsAwaitingCheckoutDefaultUser": 0,
-      "maxStatementsPerConnection": 0,
-      "vetoableChangeListeners": [],
-      "user": "scm",
-      "startTimeMillisDefaultUser": 1626264884215,
-      "statementDestroyerNumConnectionsWithDeferredDestroyStatementsDefaultUser": -1,
-      "factoryClassLocation": null,
-      "maxIdleTimeExcessConnections": 0,
-      "testConnectionOnCheckin": false,
-      "statementDestroyerNumThreads": -1,
-      "statementDestroyerNumConnectionsWithDeferredDestroyStatementsAllUsers": -1,
-      "acquireRetryAttempts": 5,
-      "threadPoolNumActiveThreads": 0,
-      "autoCommitOnClose": false,
-      "jdbcUrl": "jdbc:mysql://localhost/scm?useUnicode=true&characterEncoding=UTF-8",
-      "maxConnectionAge": 0,
-      "initialPoolSize": 5,
-      "userOverridesAsString": null,
-      "maxIdleTime": 0,
-      "statementCacheNumCheckedOutStatementsAllUsers": 0,
-      "numConnections": 23,
-      "threadPoolNumIdleThreads": 3,
-      "connectionTesterClassName": "com.mchange.v2.c3p0.impl.DefaultConnectionTester"
-    },
-    {
-      "name": "com.cloudera.enterprise:context=ROOT,type=javamelodyfacade$sessionlistener,id=0",
-      "modelerType": "com.cloudera.enterprise.JavaMelodyFacade$SessionListener"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=StatusProvider,name=hmonReportRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=StatusProvider,name=hmonStatusRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 2534,
-      "Min": 0.0,
-      "Max": 14.0,
-      "50thPercentile": 1.0,
-      "Mean": 1.10655090765588,
-      "StdDev": 1.145414527310281,
-      "75thPercentile": 1.0,
-      "95thPercentile": 5.0,
-      "98thPercentile": 7.0,
-      "99thPercentile": 8.0,
-      "999thPercentile": 13.884000000000015
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=ImpalaController,name=cancelQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=serverconnector,id=0",
-      "modelerType": "org.eclipse.jetty.server.ServerConnector",
-      "stopTimeout": 30000,
-      "localPort": 7180,
-      "acceptQueueSize": 0,
-      "soLingerTime": -1,
-      "acceptors": 1,
-      "selectorManager": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=serverconnector$serverconnectormanager,id=0",
-      "port": 7180,
-      "idleTimeout": 300000,
-      "host": null,
-      "acceptorPriorityDelta": -2,
-      "state": "STARTED",
-      "defaultProtocol": "HTTP/1.1",
-      "protocols": "[http/1.1]"
-    },
-    {
-      "name": "java.lang:type=OperatingSystem",
-      "modelerType": "sun.management.OperatingSystemImpl",
-      "OpenFileDescriptorCount": 1635,
-      "MaxFileDescriptorCount": 4096,
-      "CommittedVirtualMemorySize": 21640519680,
-      "TotalSwapSpaceSize": 0,
-      "FreeSwapSpaceSize": 0,
-      "ProcessCpuTime": 2583920000000,
-      "FreePhysicalMemorySize": 970735616,
-      "TotalPhysicalMemorySize": 67383332864,
-      "SystemCpuLoad": 0.008155484223788218,
-      "ProcessCpuLoad": 0.0014890681243890356,
-      "Arch": "amd64",
-      "SystemLoadAverage": 0.28,
-      "AvailableProcessors": 32,
-      "Version": "3.10.0-1160.11.1.el7.x86_64",
-      "Name": "Linux",
-      "ObjectName": "java.lang:type=OperatingSystem"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:context=ROOT,type=cmfhttpsessionlistener,id=0",
-      "modelerType": "com.cloudera.server.web.cmf.CmfHttpSessionListener"
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=configDefaultsGenerationDurationMs",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 1,
-      "Min": 81.0,
-      "Max": 81.0,
-      "50thPercentile": 81.0,
-      "Mean": 81.0,
-      "StdDev": 0.0,
-      "75thPercentile": 81.0,
-      "95thPercentile": 81.0,
-      "98thPercentile": 81.0,
-      "99thPercentile": 81.0,
-      "999thPercentile": 81.0
-    },
-    {
-      "name": "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-      "modelerType": "org.eclipse.jetty.security.ConstraintSecurityHandler",
-      "childHandlers": [
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-      "stopTimeout": 30000,
-      "handlers": [
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2"
-      ],
-      "state": "STARTED"
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=taskCount",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 52682
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=scmDescriptorGenerationBumpsByExplicitCalls",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 61
-    },
-    {
-      "name": "org.eclipse.jetty.server:context=HTTP/1.1@55a9a0ba,type=serverconnector$serverconnectormanager,id=0",
-      "modelerType": "org.eclipse.jetty.server.ServerConnector$ServerConnectorManager",
-      "scheduler": "ScheduledExecutorScheduler@7e853527{STARTED}",
-      "stopTimeout": 30000,
-      "executor": "BoundedQueuedThreadPool[scm-web]@36f7fd43{STARTED,8<=8<=100,i=3,q=0}[ReservedThreadExecutor@59b4566a{s=3/10,p=0}]",
-      "selectorCount": 1,
-      "connectTimeout": 15000,
-      "state": "STARTED"
-    },
-    {
-      "name": "java.lang:type=MemoryManager,name=Metaspace Manager",
-      "modelerType": "sun.management.MemoryManagerImpl",
-      "Valid": true,
-      "MemoryPoolNames": [
-        "Metaspace",
-        "Compressed Class Space"
-      ],
-      "Name": "Metaspace Manager",
-      "ObjectName": "java.lang:type=MemoryManager,name=Metaspace Manager"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=EventsController,name=query",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 8,
-      "Min": 10.0,
-      "Max": 36.0,
-      "50thPercentile": 16.5,
-      "Mean": 17.375,
-      "StdDev": 8.279708414465537,
-      "75thPercentile": 19.25,
-      "95thPercentile": 36.0,
-      "98thPercentile": 36.0,
-      "99thPercentile": 36.0,
-      "999thPercentile": 36.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=ImpalaController,name=storedQueryInfoDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "org.eclipse.jetty.io:context=HTTP/1.1@55a9a0ba,type=managedselector,id=0",
-      "modelerType": "org.eclipse.jetty.io.ManagedSelector",
-      "stopTimeout": 30000,
-      "state": "STARTED"
-    },
-    {
-      "name": "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-      "modelerType": "org.eclipse.jetty.servlet.ServletHandler",
-      "childHandlers": [
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2",
-      "stopTimeout": 30000,
-      "handlers": [
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "servlets": [
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "state": "STARTED",
-      "filters": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "filterMappings": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "servletMappings": [
-        null,
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    {
-      "name": "com.cloudera.enterprise.debug:type=JvmPauseMonitor,name=numPausesDetected",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 4
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=YarnController,name=killApplicationDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=YarnController,name=executingApplicationsQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=AgentProtocolImpl,name=heartbeatsFailed",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=scmDescriptorFragmentsGenerationTimeout",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "java.lang:type=MemoryPool,name=Par Eden Space",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 572653568,
-        "init": 281346048,
-        "max": 572653568,
-        "used": 538963768
-      },
-      "PeakUsage": {
-        "committed": 572653568,
-        "init": 281346048,
-        "max": 572653568,
-        "used": 572653568
-      },
-      "MemoryManagerNames": [
-        "ConcurrentMarkSweep",
-        "ParNew"
-      ],
-      "UsageThresholdSupported": false,
-      "CollectionUsageThreshold": 0,
-      "CollectionUsageThresholdExceeded": false,
-      "CollectionUsageThresholdCount": 0,
-      "CollectionUsage": {
-        "committed": 572653568,
-        "init": 281346048,
-        "max": 572653568,
-        "used": 0
-      },
-      "CollectionUsageThresholdSupported": true,
-      "Name": "Par Eden Space",
-      "Type": "HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=Par Eden Space"
-    },
-    {
-      "name": "org.eclipse.jetty.server.handler:type=statisticshandler,id=0",
-      "modelerType": "org.eclipse.jetty.server.handler.StatisticsHandler",
-      "dispatchedTimeMean": 3.8986807861437676,
-      "server": "org.eclipse.jetty.server:type=server,id=0",
-      "handler": "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1",
-      "asyncDispatches": 0,
-      "asyncRequestsWaitingMax": 0,
-      "expires": 0,
-      "requestTimeTotal": 1563948,
-      "requestTimeMax": 6268,
-      "responses1xx": 0,
-      "statsOnMs": 68366192,
-      "requests": 401148,
-      "requestsActive": 0,
-      "dispatchedActive": 0,
-      "requestTimeStdDev": 23.238565010741787,
-      "asyncRequests": 0,
-      "state": "STARTED",
-      "requestTimeMean": 3.8986807861437676,
-      "dispatched": 401148,
-      "stopTimeout": 30000,
-      "asyncRequestsWaiting": 0,
-      "responsesBytesTotal": 4921960672,
-      "dispatchedActiveMax": 7,
-      "childHandlers": [
-        "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1",
-        "org.eclipse.jetty.server.session:context=ROOT,type=sessionhandler,id=1",
-        "org.eclipse.jetty.security:context=ROOT,type=constraintsecurityhandler,id=2",
-        "org.eclipse.jetty.servlet:context=ROOT,type=servlethandler,id=2",
-        "org.eclipse.jetty.server.handler.gzip:context=ROOT,type=gziphandler,id=2"
-      ],
-      "dispatchedTimeMax": 6268,
-      "dispatchedTimeTotal": 1563948,
-      "requestsActiveMax": 7,
-      "responses4xx": 0,
-      "responses5xx": 0,
-      "handlers": [
-        "org.eclipse.jetty.webapp:context=ROOT,type=webappcontext,id=1"
-      ],
-      "responses2xx": 400564,
-      "responses3xx": 584,
-      "dispatchedTimeStdDev": 23.238565010741787
-    },
-    {
-      "name": "org.eclipse.jetty.security:context=ROOT,type=defaultauthenticatorfactory,id=2",
-      "modelerType": "org.eclipse.jetty.security.DefaultAuthenticatorFactory"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf.home:type=SystemHealth,name=generate-historical-health-info-duration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.cmf.descriptor:type=DescriptorFragmentsCache,name=configDefaultsFragmentsGenerationTimeout",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf.components:type=FirehoseRequestService,name=rejectionCount",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Counter",
-      "Count": 0
-    },
-    {
-      "name": "java.lang:type=Memory",
-      "modelerType": "sun.management.MemoryImpl",
-      "ObjectPendingFinalizationCount": 0,
-      "HeapMemoryUsage": {
-        "committed": 2075918336,
-        "init": 1054867456,
-        "max": 2075918336,
-        "used": 1369371808
-      },
-      "NonHeapMemoryUsage": {
-        "committed": 409497600,
-        "init": 2555904,
-        "max": -1,
-        "used": 395129752
-      },
-      "Verbose": false,
-      "ObjectName": "java.lang:type=Memory"
-    },
-    {
-      "name": "java.lang:type=MemoryPool,name=Par Survivor Space",
-      "modelerType": "sun.management.MemoryPoolImpl",
-      "Valid": true,
-      "Usage": {
-        "committed": 71565312,
-        "init": 35127296,
-        "max": 71565312,
-        "used": 20295328
-      },
-      "PeakUsage": {
-        "committed": 71565312,
-        "init": 35127296,
-        "max": 71565312,
-        "used": 71565312
-      },
-      "MemoryManagerNames": [
-        "ConcurrentMarkSweep",
-        "ParNew"
-      ],
-      "UsageThresholdSupported": false,
-      "CollectionUsageThreshold": 0,
-      "CollectionUsageThresholdExceeded": false,
-      "CollectionUsageThresholdCount": 0,
-      "CollectionUsage": {
-        "committed": 71565312,
-        "init": 35127296,
-        "max": 71565312,
-        "used": 20295328
-      },
-      "CollectionUsageThresholdSupported": true,
-      "Name": "Par Survivor Space",
-      "Type": "HEAP",
-      "ObjectName": "java.lang:type=MemoryPool,name=Par Survivor Space"
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=StatusProvider,name=getStatus",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 51494,
-      "Min": 0.0,
-      "Max": 313.0,
-      "50thPercentile": 6.0,
-      "Mean": 5.926729327688663,
-      "StdDev": 3.30801659570727,
-      "75thPercentile": 8.0,
-      "95thPercentile": 10.0,
-      "98thPercentile": 21.0,
-      "99thPercentile": 24.710000000000036,
-      "999thPercentile": 31.971000000000004
-    },
-    {
-      "name": "java.lang:type=long,id=0",
-      "modelerType": "java.lang.Long"
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=CommandPusherThread,name=commands_active",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Gauge",
-      "Value": 0
-    },
-    {
-      "name": "com.cloudera.server.cmf:type=CommandPusherThread,name=commandHandle",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 22,
-      "Min": 0.0,
-      "Max": 385.0,
-      "50thPercentile": 2.0,
-      "Mean": 22.272727272727273,
-      "StdDev": 81.25162669034289,
-      "75thPercentile": 7.0,
-      "95thPercentile": 8.0,
-      "98thPercentile": 8.0,
-      "99thPercentile": 8.0,
-      "999thPercentile": 8.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=StatusProvider,name=smonStatusRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 49118,
-      "Min": 0.0,
-      "Max": 303.0,
-      "50thPercentile": 1.0,
-      "Mean": 0.5069017468137953,
-      "StdDev": 1.5377461290858057,
-      "75thPercentile": 1.0,
-      "95thPercentile": 1.0,
-      "98thPercentile": 3.0,
-      "99thPercentile": 4.710000000000036,
-      "999thPercentile": 7.971000000000004
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=StatusProvider,name=smonReportRequest",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
-    },
-    {
-      "name": "com.cloudera.server.web.cmf:type=ImpalaController,name=completedQueriesQueryDuration",
-      "modelerType": "com.yammer.metrics.reporting.JmxReporter$Histogram",
-      "Count": 0,
-      "Min": 0.0,
-      "Max": 0.0,
-      "50thPercentile": 0.0,
-      "Mean": 0.0,
-      "StdDev": 0.0,
-      "75thPercentile": 0.0,
-      "95thPercentile": 0.0,
-      "98thPercentile": 0.0,
-      "99thPercentile": 0.0,
-      "999thPercentile": 0.0
+        ]
+      }
     }
   ]
 }
