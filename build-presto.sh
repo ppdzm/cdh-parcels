@@ -13,6 +13,7 @@ PRESTO_UNZIP_DIR_NAME="presto-server-${PRESTO_VERSION}"
 PARCEL_BUILD_PATH="${PARCEL_RESOURCE_PATH}_build"
 CSD_RESOURCE_PATH="presto-csd"
 CSD_NAME="PRESTO-csd-${PRESTO_VERSION}.jar"
+ETC_PATH="src/presto/parcel/etc"
 META_PATH="src/presto/parcel/meta"
 
 PRESTO_DOWNLOAD_URL="https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/$PRESTO_TAR_BALL_NAME"
@@ -55,6 +56,8 @@ mv $PRESTO_UNZIP_DIR_NAME $PARCEL_RESOURCE_PATH
 # 复制meta到parcel
 echo -e "${GREEN}复制 $CYAN$META_PATH${GREEN} 到 $CYAN$PARCEL_RESOURCE_PATH$RESET"
 cp -rf $META_PATH $PARCEL_RESOURCE_PATH
+#cp -rf $ETC_PATH $PARCEL_RESOURCE_PATH
+mkdir -p $PARCEL_RESOURCE_PATH/etc/catalog
 # 复制cli jar到parcel bin
 echo -e "${GREEN}复制 $CYAN$PRETO_CLI_JAR${GREEN} 到 $CYAN$PARCEL_RESOURCE_PATH$RESET"
 cp -rf ${PRETO_CLI_JAR} $PARCEL_RESOURCE_PATH/bin/
@@ -77,7 +80,7 @@ from os.path import realpath, dirname
 
 path = dirname(realpath(sys.argv[0]))
 arg = ' '.join(sys.argv[1:])
-cmd = "env PATH=\"/usr/java/jdk1.8.0_181-cloudera/bin:$PATH\" %s/presto-cli-${presto.version}-executable.jar %s" % (path, arg)
+cmd = "env PATH=\"/usr/java/jdk1.8.0_181-cloudera/bin:$PATH\" %s/presto-cli-${PRESTO_VERSION}-executable.jar %s" % (path, arg)
 
 subprocess.call(cmd, shell=True)
 EOF

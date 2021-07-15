@@ -19,7 +19,7 @@
       "name": "presto",
       "version": "0.257-presto%VERSION%",
       "pkg_version": "0.257+presto%VERSION%",
-      "pkg_release": "0.257-cdh-6.3.2"
+      "pkg_release": "cdh-6.3.2"
     }
   ],
   "provides": [

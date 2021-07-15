@@ -9,7 +9,7 @@
   },
 
   "inExpressWizard" : true,
-  "icon" : "image/presto.png",
+  "icon" : "images/presto.png",
   "serviceDependencies" : [
     {
       "name" : "HIVE",
@@ -91,7 +91,7 @@
 
     },
     "logging" : {
-      "dir" : "/var/log",
+      "dir" : "/var/log/presto",
       "filename" : "presto-server.log",
       "modifiable" : true,
       "configName" : "log.dir",
@@ -309,7 +309,7 @@
 
       },
     "logging" : {
-      "dir" : "/var/log",
+      "dir" : "/var/log/presto",
       "filename" : "presto-server.log",
       "modifiable" : true,
       "configName" : "log.dir",

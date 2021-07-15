@@ -11,3 +11,4 @@ PRESTO-0.257-cdh-6.3.2_build
 csd-build
 presto-csd
 target
+flink-*

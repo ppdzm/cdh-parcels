@@ -1,16 +1,11 @@
 #!/bin/bash
-
-
 # Time marker for both stderr and stdout
 date 1>&2
 
 PRESTO_PARCEL_PATH=/opt/cloudera/parcels/PRESTO
 
-
-
 #init config.properties
 cat $CONF_DIR/etc/config.properties > $PRESTO_PARCEL_PATH/etc/config.properties
-
 
 #init node.properties
 echo 'node.environment=presto_cluster' > $PRESTO_PARCEL_PATH/etc/node.properties
@@ -31,7 +26,6 @@ cp -f $CONF_DIR/hive-conf/hive-site.xml $PRESTO_PARCEL_PATH/etc/catalog/
 cp -f $CONF_DIR/hive-conf/core-site.xml $PRESTO_PARCEL_PATH/etc/catalog/
 cp -f $CONF_DIR/hive-conf/hdfs-site.xml $PRESTO_PARCEL_PATH/etc/catalog/
 
-
 #init hive_krb5_config
 cp -f $CONF_DIR/etc/kerberos.config $PRESTO_PARCEL_PATH/etc/
 if cat $PRESTO_PARCEL_PATH/etc/kerberos.config | grep "authentication"  | grep "true" > /dev/null
@@ -50,10 +44,6 @@ then
 
 fi
 
-
-
-exec $PRESTO_PARCEL_PATH/bin/launcher --server-log-file=/var/log/presto-server.log run
-
-
+exec $PRESTO_PARCEL_PATH/bin/launcher --server-log-file=/var/log/presto/presto-server.log run
 
 exit 0
