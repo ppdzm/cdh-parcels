@@ -29,8 +29,8 @@ cp -f $CONF_DIR/hive-conf/core-site.xml $PRESTO_PARCEL_PATH/etc/catalog/
 cp -f $CONF_DIR/hive-conf/hdfs-site.xml $PRESTO_PARCEL_PATH/etc/catalog/
 cp -f $CONF_DIR/etc/client_kerberos.config $PRESTO_PARCEL_PATH/etc/
 
-# init log.properties
-cp -f $CONF_DIR/etc/log.properties $PRESTO_PARCEL_PATH/etc/
+## init log.properties
+#cp -f $CONF_DIR/etc/log.properties $PRESTO_PARCEL_PATH/etc/
 
 #init hive_krb5_config
 cp -f $CONF_DIR/etc/kerberos.config $PRESTO_PARCEL_PATH/etc/
