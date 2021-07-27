@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "name": "PRESTO",
+  "version": "0.257-cdh-6.3.2",
+  "depends": "CDH (>= 5.2), CDH (<< 6.4)",
+  "setActiveSymlink": true,
+  "replaces": "PRESTO",
+  "scripts": {
+    "defines": "presto_env.sh"
+  },
+  "packages": [
+    {
+      "name": "presto",
+      "version": "0.257-presto%VERSION%"
+    }
+  ],
+  "components": [
+    {
+      "name": "presto",
+      "version": "0.257-presto%VERSION%",
+      "pkg_version": "0.257+presto%VERSION%",
+      "pkg_release": "cdh-6.3.2"
+    }
+  ],
+  "provides": [
+    "presto"
+  ],
+  "users": {
+    "presto": {
+      "longname": "Presto",
+      "home": "/var/lib/presto",
+      "shell": "/sbin/nologin",
+      "extra_groups": []
+    }
+  },
+  "groups": [
+  ]
+}

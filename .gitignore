@@ -1,14 +1,6 @@
 .DS_Store
 .git
 .idea
-*.tgz
-*.tar.gz
-*.jar
-*.parcel
-*.sha
-PRESTO-0.257-cdh-6.3.2
-PRESTO-0.257-cdh-6.3.2_build
-csd-build
-presto-csd
+data
+resources
 target
-flink-*

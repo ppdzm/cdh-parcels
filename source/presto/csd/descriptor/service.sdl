@@ -1,0 +1,419 @@
+{
+  "name": "PRESTO",
+  "label": "Presto",
+  "description": "Distributed SQL Query Engine for Big Data",
+  "version": "0.257",
+  "runAs": {
+    "user": "root",
+    "group": "root"
+  },
+  "inExpressWizard": true,
+  "icon": "images/presto.png",
+  "serviceDependencies": [
+    {
+      "name": "HIVE",
+      "required": "false"
+    }
+  ],
+  "kerberos": "${hive_kerberos}",
+  "parameters": [
+    {
+      "name": "coordinator_webui_port",
+      "label": "Coordinator Port",
+      "description": "The port of the coordinator",
+      "configName": "http-server.http.port",
+      "required": "true",
+      "type": "port",
+      "default": 8080
+    },
+    {
+      "name": "kerberos_realm",
+      "label": "kerberos_realm",
+      "description": "kerberos_realm",
+      "configName": "kerberos_realm",
+      "required": "false",
+      "type": "string",
+      "default": "HYPERS.CC"
+    },
+    {
+      "name": "hive_kerberos",
+      "label": "hive_kerberos",
+      "description": "if hive use kerberos",
+      "configName": "hive.metastore.authentication.type",
+      "required": "true",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "discovery_uri",
+      "label": "discovery uri",
+      "description": "discovery uri",
+      "configName": "discovery.uri",
+      "required": "true",
+      "type": "uri",
+      "default": "http://localhost:8080"
+    },
+    {
+      "name": "hive_metastore_host",
+      "label": "hive.metastore.host",
+      "description": "hive.metastore.host",
+      "configName": "hive.metastore.host",
+      "required": "true",
+      "type": "string",
+      "default": "localhost"
+    },
+    {
+      "name": "hive_metastore_port",
+      "label": "Metastore Port",
+      "description": "The port of the Metastore",
+      "configName": "hive.metastore.port",
+      "required": "true",
+      "type": "port",
+      "default": 9083
+    }
+  ],
+  "rolesWithExternalLinks": [
+    "PRESTO_COORDINATOR"
+  ],
+  "roles": [
+    {
+      "name": "PRESTO_COORDINATOR",
+      "label": "Coordinator",
+      "pluralLabel": "Coordinators",
+      "startRunner": {
+        "program": "scripts/control-master.sh"
+      },
+      "logging": {
+        "dir": "/var/log/presto",
+        "filename": "presto-server.log",
+        "modifiable": true,
+        "configName": "log.dir",
+        "loggingType": "log4j"
+      },
+      "kerberosPrincipals": [
+        {
+          "name": "presto",
+          "primary": "presto",
+          "instance": "${host}"
+        }
+      ],
+      "externalLink": {
+        "name": "coordinator_web_ui",
+        "label": "Coordinator Web UI",
+        "url": "http://${host}:${coordinator_webui_port}"
+      },
+      "topology": {
+        "maxInstances": 1
+      },
+      "parameters": [
+        {
+          "name": "security.config-file",
+          "label": "security.config-file",
+          "description": "security.config-file",
+          "configName": "security.config-file",
+          "required": "false",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": ""
+        },
+        {
+          "name": "hive_auth",
+          "label": "hive_auth",
+          "description": "hive_auth",
+          "configName": "hive_auth",
+          "required": "true",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "http-server.https.keystore.key",
+          "label": "http-server.https.keystore.key",
+          "description": "http-server.https.keystore.key",
+          "configName": "http-server.https.keystore.key",
+          "required": "false",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "http-server.https.port",
+          "label": "http-server.https.port",
+          "description": "http-server.https.port",
+          "configName": "http-server.https.port",
+          "required": "false",
+          "type": "port",
+          "default": 7778
+        },
+        {
+          "name": "http-server.https.keystore.path",
+          "label": "http-server.https.keystore.path",
+          "description": "http-server.https.keystore.path",
+          "configName": "http-server.https.keystore.path",
+          "required": "false",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": ""
+        },
+        {
+          "name": "client_kerberos",
+          "label": "client_kerberos",
+          "description": "if client must kerberos",
+          "configName": "client_kerberos",
+          "required": "true",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "node.data-dir",
+          "label": "node.data-dir",
+          "description": "node.data-dir",
+          "configName": "node.data-dir",
+          "required": "true",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": "/opt/data/presto"
+        },
+        {
+          "name": "query.max-memory",
+          "label": "query.max-memory",
+          "description": "query.max-memory",
+          "configName": "query.max-memory",
+          "required": "true",
+          "type": "string",
+          "default": "4GB"
+        },
+        {
+          "name": "query.max-memory-per-node",
+          "label": "query.max-memory-per-node",
+          "description": "query.max-memory-per-node",
+          "configName": "query.max-memory-per-node",
+          "required": "true",
+          "type": "string",
+          "default": "1GB"
+        },
+        {
+          "name": "jvm_config",
+          "label": "jvm_config",
+          "description": "jvm_config",
+          "configName": "jvm.config",
+          "required": "true",
+          "type": "string_array",
+          "separator": ";",
+          "default": [
+            "-server",
+            "-Xmx16G",
+            "-XX:+UseConcMarkSweepGC",
+            "-XX:+ExplicitGCInvokesConcurrent",
+            "-XX:+AggressiveOpts",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-XX:OnOutOfMemoryError=kill -9 %p"
+          ]
+        }
+      ],
+      "configWriter": {
+        "generators": [
+          {
+            "filename": "etc/config.properties",
+            "configFormat": "properties",
+            "includedParams": [
+              "discovery_uri",
+              "coordinator_webui_port",
+              "query.max-memory",
+              "query.max-memory-per-node"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "coordinator",
+                "value": "true"
+              },
+              {
+                "key": "discovery-server.enabled",
+                "value": "true"
+              },
+              {
+                "key": "node-scheduler.include-coordinator",
+                "value": "false"
+              }
+            ]
+          },
+          {
+            "filename": "etc/client_kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "http-server.https.port",
+              "http-server.https.keystore.path",
+              "http-server.https.keystore.key"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "http-server.https.enabled",
+                "value": "true"
+              }
+            ]
+          },
+          {
+            "filename": "etc/catalog/hive.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "connector.name",
+                "value": "hive-hadoop2"
+              },
+              {
+                "key": "hive.metastore.uri",
+                "value": "thrift://${hive_metastore_host}:${hive_metastore_port}"
+              }
+            ]
+          },
+          {
+            "filename": "etc/jvm.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "jvm_config"
+            ]
+          },
+          {
+            "filename": "etc/node.properties.dummy",
+            "configFormat": "properties",
+            "includedParams": [
+              "node.data-dir"
+            ]
+          },
+          {
+            "filename": "etc/kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "hive_kerberos",
+              "kerberos_realm",
+              "hive_metastore_host",
+              "client_kerberos",
+              "hive_auth"
+            ]
+          },
+          {
+            "filename": "etc/hive_auth.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "security.config-file"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "PRESTO_WORKER",
+      "label": "Worker",
+      "pluralLabel": "Workers",
+      "startRunner": {
+        "program": "scripts/control-worker.sh"
+      },
+      "logging": {
+        "dir": "/var/log/presto",
+        "filename": "presto-worker.log",
+        "modifiable": true,
+        "configName": "log.dir",
+        "loggingType": "log4j"
+      },
+      "kerberosPrincipals": [
+        {
+          "name": "presto",
+          "primary": "presto",
+          "instance": "${host}"
+        }
+      ],
+      "topology": {
+        "minInstances": 1
+      },
+      "parameters": [
+        {
+          "name": "jvm_config",
+          "label": "jvm_config",
+          "description": "jvm_config",
+          "configName": "jvm.config",
+          "required": "true",
+          "type": "string_array",
+          "separator": ";",
+          "default": [
+            "-server",
+            "-Xmx16G",
+            "-XX:+UseConcMarkSweepGC",
+            "-XX:+ExplicitGCInvokesConcurrent",
+            "-XX:+AggressiveOpts",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-XX:OnOutOfMemoryError=kill -9 %p"
+          ]
+        },
+        {
+          "name": "node.data-dir",
+          "label": "node.data-dir",
+          "description": "node.data-dir",
+          "configName": "node.data-dir",
+          "required": "true",
+          "type": "path",
+          "pathType": "localDataDir",
+          "default": "/data/presto"
+        }
+      ],
+      "configWriter": {
+        "generators": [
+          {
+            "filename": "etc/config.properties",
+            "configFormat": "properties",
+            "includedParams": [
+              "discovery_uri",
+              "coordinator_webui_port"
+            ],
+            "additionalConfigs": [
+              {
+                "key": "coordinator",
+                "value": "false"
+              },
+              {
+                "key": "node-scheduler.include-coordinator",
+                "value": "false"
+              }
+            ]
+          },
+          {
+            "filename": "etc/catalog/hive.properties",
+            "configFormat": "properties",
+            "includedParams": [],
+            "additionalConfigs": [
+              {
+                "key": "connector.name",
+                "value": "hive-hadoop2"
+              },
+              {
+                "key": "hive.metastore.uri",
+                "value": "thrift://${hive_metastore_host}:${hive_metastore_port}"
+              }
+            ]
+          },
+          {
+            "filename": "etc/jvm.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "jvm_config"
+            ]
+          },
+          {
+            "filename": "etc/node.properties.dummy",
+            "configFormat": "properties",
+            "includedParams": [
+              "node.data-dir"
+            ]
+          },
+          {
+            "filename": "etc/kerberos.config",
+            "configFormat": "properties",
+            "includedParams": [
+              "hive_kerberos",
+              "kerberos_realm",
+              "hive_metastore_host"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
