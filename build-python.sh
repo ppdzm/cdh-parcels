@@ -30,7 +30,7 @@ TARGET_DIR="${BASE_DIR}/target"
 BUILD_DIR="${TARGET_DIR}/build"
 PARCEL_BUILD_DIR="${BUILD_DIR}/${PARCEL_NAME}"
 PARCEL_DIR=${TARGET_DIR}/parcels/python
-META_DIR=${SOURCE_LIR}/python/parcel/meta
+META_DIR=${SOURCE_DIR}/python/parcel/meta
 OS_VERSION=el7
 CDH_VERSION=6.3.2
 PARCEL_FULL_NAME="${PARCEL_NAME}-${OS_VERSION}.parcel"
@@ -67,7 +67,7 @@ conda create -y -q -n python3 python=${PYTHON3_VERSION}
 
 mkdir -p "${PARCEL_BUILD_DIR}"/{lib,meta}
 echo -e "${GREEN}Create ${PARCEL_BUILD_DIR}/meta/parcel.json${RESET}"
-cp "${META_DIR}"* "${PARCEL_BUILD_DIR}/"
+cp -rf "${META_DIR}" "${PARCEL_BUILD_DIR}/"
 sed -i -e "s/__OS_VERSION__/${OS_VERSION}/g" "${PARCEL_BUILD_DIR}/meta/parcel.json"
 sed -i -e "s/__PARCEL_VERSION__/${PARCEL_VERSION}/g" "${PARCEL_BUILD_DIR}/meta/parcel.json"
 sed -i -e "s/__PARCEL_NAME__/${PARCEL_SHORT_NAME}/g" "${PARCEL_BUILD_DIR}/meta/parcel.json"
