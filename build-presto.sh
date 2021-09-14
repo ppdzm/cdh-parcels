@@ -91,21 +91,22 @@ echo -e "${GREEN}复制 ${CYAN}${SOURCE_DIR}/presto/parcel/launcher${GREEN} 到 
 cp -rf "${SOURCE_DIR}/presto/parcel/launcher" "${PARCEL_BUILD_DIR}/bin"
 chmod +x "${PARCEL_BUILD_DIR}/bin/launcher"
 # 创建PRESTO-0.257-cdh-6.3.2/bin/presto
-cat <<"EOF" >"${PARCEL_BUILD_DIR}/bin/presto"
-#!/usr/bin/env python
-
-import os
-import sys
-import subprocess
-from os.path import realpath, dirname
-
-path = dirname(realpath(sys.argv[0]))
-arg = ' '.join(sys.argv[1:])
-#cmd = "env PATH=/usr/java/jdk1.8.0_181-cloudera/bin:${PATH} %s/presto-cli-0.257-executable.jar %s" % (path, arg)
-cmd = "source /etc/profile && %s/presto-cli-0.257-executable.jar %s" % (path, arg)
-
-subprocess.call(cmd, shell=True)
-EOF
+cp "${PARCEL_BUILD_DIR}"/bin/presto-cli-0.257-executable.jar "${PARCEL_BUILD_DIR}"/bin/presto
+#cat <<"EOF" >"${PARCEL_BUILD_DIR}/bin/presto"
+##!/usr/bin/env python
+#
+#import os
+#import sys
+#import subprocess
+#from os.path import realpath, dirname
+#
+#path = dirname(realpath(sys.argv[0]))
+#arg = ' '.join(sys.argv[1:])
+##cmd = "env PATH=/usr/java/jdk1.8.0_181-cloudera/bin:${PATH} %s/presto-cli-0.257-executable.jar %s" % (path, arg)
+#cmd = "source /etc/profile && %s/presto-cli-0.257-executable.jar %s" % (path, arg)
+#
+#subprocess.call(cmd, shell=True)
+#EOF
 echo -e "${GREEN}修改 ${CYAN}${PARCEL_BUILD_DIR}/bin/presto${GREEN} 为可执行${RESET}"
 chmod +x "${PARCEL_BUILD_DIR}/bin/presto"
 # 校验生成parcel前的路径：java -jar cm_ext/validator/target/validator.jar -d PRESTO-0.257-cdh-6.3.2

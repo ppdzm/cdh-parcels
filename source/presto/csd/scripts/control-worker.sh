@@ -20,7 +20,7 @@ sed -i "s/;/\n/g" $CONF_DIR/etc/jvm.config
 cat $CONF_DIR/etc/jvm.config > $PRESTO_PARCEL_PATH/etc/jvm.config
 
 #init hive.properties
-echo 'connector.name=hive-hadoop2' > $PRESTO_PARCEL_PATH/etc/catalog/hive.properties
+#echo 'connector.name=hive-hadoop2' > $PRESTO_PARCEL_PATH/etc/catalog/hive.properties
 echo 'hive.parquet.fail-on-corrupted-statistics=false' >> $PRESTO_PARCEL_PATH/etc/catalog/hive.properties
 cat $CONF_DIR/etc/catalog/hive.properties >> $PRESTO_PARCEL_PATH/etc/catalog/hive.properties
 cp -f $CONF_DIR/presto.keytab $PRESTO_PARCEL_PATH/etc/
