@@ -1,22 +1,22 @@
 {
-"bin/config.sh": {
-"user": "flink",
-"group": "flink",
-"permissions": "0755"
-},
-"bin/flink-master.sh": {
-"user": "flink",
-"group": "flink",
-"permissions": "0755"
-},
-"bin/flink-worker.sh": {
-"user": "flink",
-"group": "flink",
-"permissions": "0755"
-},
-"bin/flink-yarn.sh": {
-"user": "flink",
-"group": "flink",
-"permissions": "0755"
-}
+  "bin/config.sh": {
+    "user": "flink",
+    "group": "flink",
+    "permissions": "0755"
+  },
+  "bin/flink-master.sh": {
+    "user": "flink",
+    "group": "flink",
+    "permissions": "0755"
+  },
+  "bin/flink-worker.sh": {
+    "user": "flink",
+    "group": "flink",
+    "permissions": "0755"
+  },
+  "bin/flink-yarn.sh": {
+    "user": "flink",
+    "group": "flink",
+    "permissions": "0755"
+  }
 }

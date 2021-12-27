@@ -1,6 +1,13 @@
 #!/bin/bash
+CYAN="\033[36;1m"
+GREEN="\033[32;1m"
+RESET="\033[0m"
 set -e
-#set -x
+BASE_DIR=$(
+  dirname "$0"
+#  cd "$(dirname "$0")"
+#  pwd || exit
+)
 usage() {
   echo -e "${GREEN}Usage: $0 < parcel | csd | csd_standalone >"
 }
@@ -8,36 +15,23 @@ if [ -z "$1" ]; then
   usage
   exit 1
 fi
-CYAN="\033[36;1m"
-GREEN="\033[32;1m"
-RED="\033[31;1m"
-RESET="\033[0m"
-BASE_DIR=$(
-  dirname "$0"
-  #  cd "$(dirname "$0")"
-  #  pwd || exit
-)
 SERVICE_NAME="FLINK"
 FLINK_URL=$(sed '/^FLINK_URL=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
 FLINK_VERSION=$(sed '/^FLINK_VERSION=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
 EXT_VERSION=$(sed '/^EXT_VERSION=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
 OS_VERSION=$(sed '/^OS_VERSION=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
-CDH_MIN_FULL=$(sed '/^CDH_MIN_FULL=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
-CDH_MIN=$(sed '/^CDH_MIN=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
-CDH_MAX_FULL=$(sed '/^CDH_MAX_FULL=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
-CDH_MAX=$(sed '/^CDH_MAX=/!d;s/.*=//' "${BASE_DIR}/source/flink/flink-parcel.properties")
 # flink
 SERVICE_NAME_LOWER=$(echo ${SERVICE_NAME} | tr '[:upper:]' '[:lower:]')
-# flink-1.13.1-bin-scala_2.11.tgz
+# flink-1.14.0-bin-scala_2.11.tgz
 ARCHIVE_NAME=$(basename "${FLINK_URL}")
-# flink-1.13.1
+# flink-1.14.0
 UNZIP_ARCHIVE_NAME="${SERVICE_NAME_LOWER}-${FLINK_VERSION}"
-# flink-1.13.1-bin-scala_2.11
+# flink-1.14.0-bin-scala_2.11
 PARCEL_FOLDER_NAME_LOWER="$(basename "${ARCHIVE_NAME}" .tgz)"
-# FLINK-1.13.1-BIN-SCALA_2.11
+# FLINK-1.14.0-BIN-SCALA_2.11
 PARCEL_FOLDER_NAME_UPPER="$(echo "${PARCEL_FOLDER_NAME_LOWER}" | tr '[:lower:]' '[:upper:]')"
-# FLINK-1.13.1-BIN-SCALA_2.11-el7.parcel
-PARCEL_NAME="${PARCEL_FOLDER_NAME_UPPER}-el${OS_VERSION}.parcel"
+# FLINK-1.14.0-BIN-SCALA_2.11-el7.parcel
+PARCEL_NAME="${PARCEL_FOLDER_NAME_UPPER}-${OS_VERSION}.parcel"
 LIB_DIR="${BASE_DIR}/lib"
 RESOURCES_DIR="${BASE_DIR}/resources"
 SOURCE_LIR="${BASE_DIR}/source"
@@ -61,7 +55,7 @@ function get_flink() {
   fi
 }
 
-function build_parcel() {
+function clean() {
   if [ -d "${PARCEL_DIR}" ]; then
     # 删除上次的构建
     echo -e "${GREEN}Delete flink parcel directory ${CYAN}${PARCEL_DIR}${RESET}"
@@ -72,6 +66,10 @@ function build_parcel() {
     echo -e "${GREEN}Delete parcel build directory ${CYAN}${PARCEL_BUILD_DIR}${RESET}"
     rm -rf "${PARCEL_BUILD_DIR}"
   fi
+}
+
+function build_parcel() {
+  clean
   get_flink
   echo -e "${GREEN}Create parcel build directory ${CYAN}${PARCEL_BUILD_DIR}${RESET}"
   mkdir -p "${PARCEL_BUILD_DIR}"
@@ -93,8 +91,6 @@ function build_parcel() {
   sed -i -e "s/%flink_version%/${PARCEL_FOLDER_NAME_UPPER}/" "${PARCEL_BUILD_DIR}/meta/flink_env.sh"
   sed -i -e "s/%VERSION%/${FLINK_VERSION}/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
   sed -i -e "s/%EXT_VERSION%/${EXT_VERSION}/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
-  sed -i -e "s/%CDH_MAX_FULL%/${CDH_MAX_FULL}/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
-  sed -i -e "s/%CDH_MIN_FULL%/${CDH_MIN_FULL}/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
   sed -i -e "s/%SERVICE_NAME%/${SERVICE_NAME}/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
   sed -i -e "s/%SERVICE_NAME_LOWER%/flink/" "${PARCEL_BUILD_DIR}/meta/parcel.json"
   echo -e "${GREEN}Validate parcel build path ${CYAN}${PARCEL_BUILD_DIR}${RESET}"
@@ -124,9 +120,6 @@ function build_csd() {
   rm -rf "${CSD_BUILD_DIR}"
   cp -rf "${SOURCE_LIR}/flink/csd" "${CSD_BUILD_DIR}"
   sed -i -e "s/%VERSION%/${FLINK_VERSION}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  sed -i -e "s/%CDH_MIN%/${CDH_MIN}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  sed -i -e "s/%CDH_MAX%/${CDH_MAX}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  #  sed -i -e "s/%SERVICE_NAME%/${livy_service_name}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
   sed -i -e "s/%SERVICE_NAME_LOWER%/flink/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
   sed -i -e "s/%SERVICE_NAME_LOWER%/flink/" "${CSD_BUILD_DIR}/scripts/control.sh"
   java -jar "${LIB_DIR}"/validator.jar -s "${CSD_BUILD_DIR}/descriptor/service.sdl" -l "SPARK_ON_YARN SPARK2_ON_YARN"
@@ -143,9 +136,6 @@ function build_csd_standalone() {
   rm -rf "${CSD_BUILD_DIR}"
   cp -rf "${SOURCE_LIR}/flink/csd-standalone" "${CSD_BUILD_DIR}"
   sed -i -e "s/%VERSION%/${FLINK_VERSION}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  sed -i -e "s/%CDH_MIN%/${CDH_MIN}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  sed -i -e "s/%CDH_MAX%/${CDH_MAX}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
-  #  sed -i -e "s/%SERVICE_NAME%/${livy_service_name}/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
   sed -i -e "s/%SERVICE_NAME_LOWER%/flink/" "${CSD_BUILD_DIR}/descriptor/service.sdl"
   sed -i -e "s/%SERVICE_NAME_LOWER%/flink/" "${CSD_BUILD_DIR}/scripts/control.sh"
   java -jar "${LIB_DIR}"/validator.jar -s "${CSD_BUILD_DIR}/descriptor/service.sdl" -l "SPARK_ON_YARN SPARK2_ON_YARN"
@@ -164,8 +154,13 @@ csd)
 csd-standalone)
   build_csd_standalone
   ;;
+all)
+#  build_parcel
+  build_csd
+  build_csd_standalone
+  ;;
 *)
-  echo "Usage: $0 < parcel | csd | csd-standalone >"
+  echo "${GREEN}Usage: $0 < all | parcel | csd | csd-standalone >${RESET}"
   ;;
 esac
 echo -e "${GREEN}Done!!!${RESET}"

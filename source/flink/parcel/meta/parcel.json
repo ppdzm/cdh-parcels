@@ -2,7 +2,7 @@
   "schema_version": 1,
   "name": "%SERVICE_NAME%",
   "version": "%VERSION%-%EXT_VERSION%",
-  "depends": "CDH (>= %CDH_MIN_FULL%), CDH (<< %CDH_MAX_FULL%)",
+  "depends": "CDH (>= 5.2), CDH (<< 6.4)",
   "setActiveSymlink": true,
   "replaces": "FLINK",
   "scripts": {

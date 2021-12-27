@@ -1,10 +1,8 @@
 #!/bin/bash
 CYAN="\033[36;1m"
 GREEN="\033[32;1m"
-RED="\033[31;1m"
 RESET="\033[0m"
 set -e
-set -x
 BASE_DIR=$(
   dirname "$0"
 #    cd "$(dirname "$0")"

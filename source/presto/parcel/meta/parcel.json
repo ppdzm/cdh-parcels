@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "PRESTO",
-  "version": "0.257-cdh-6.3.2",
+  "version": "0.263.1-cdh-6.3.2",
   "depends": "CDH (>= 5.2), CDH (<< 6.4)",
   "setActiveSymlink": true,
   "replaces": "PRESTO",
@@ -11,15 +11,15 @@
   "packages": [
     {
       "name": "presto",
-      "version": "0.257-presto%VERSION%"
+      "version": "0.263.1-cdh6.3.2"
     }
   ],
   "components": [
     {
       "name": "presto",
-      "version": "0.257-presto%VERSION%",
-      "pkg_version": "0.257+presto%VERSION%",
-      "pkg_release": "cdh-6.3.2"
+      "version": "0.263.1-cdh6.3.2",
+      "pkg_version": "0.263.1+cdh6.3.2",
+      "pkg_release": "278195317"
     }
   ],
   "provides": [

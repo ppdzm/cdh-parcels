@@ -2,7 +2,7 @@
   "name": "PRESTO",
   "label": "Presto",
   "description": "Distributed SQL Query Engine for Big Data",
-  "version": "0.257",
+  "version": "0.263.1",
   "runAs": {
     "user": "root",
     "group": "root"

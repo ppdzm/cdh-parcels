@@ -52,14 +52,6 @@ CDH除了能够管理自生所提供的一些大数据相关服务外，还允�
     
     #操作系统版本，以centos为例
     OS_VERSION=7
-    
-    #CDH 小版本
-    CDH_MIN_FULL=5.2
-    CDH_MAX_FULL=6.4
-    
-    #CDH大版本
-    CDH_MIN=5
-    CDH_MAX=6
     ```
 - 生成parcel文件
 

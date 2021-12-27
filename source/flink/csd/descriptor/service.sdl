@@ -6,8 +6,8 @@
   "compatibility": {
     "generation": 1,
     "cdhVersion": {
-      "min": "%CDH_MIN%",
-      "max": "%CDH_MAX%"
+      "min": "5",
+      "max": "6"
     }
   },
   "runAs": {
@@ -142,7 +142,7 @@
     {
       "name": "security.kerberos.login.use-ticket-cache",
       "label": "security.kerberos.login.use-ticket-cache",
-      "description": "ndicates whether to read from your Kerberos ticket cache.",
+      "description": "Indicates whether to read from your Kerberos ticket cache.",
       "type": "boolean",
       "default": false,
       "configurableInWizard": true

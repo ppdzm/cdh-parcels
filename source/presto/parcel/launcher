@@ -36,6 +36,5 @@
 # Run with --help to see options.
 #
 export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
-export PATH=$JAVA_HOME/bin:$PATH
+export PATH=${JAVA_HOME}/bin:${PATH}
 exec "$(dirname "$0")/launcher.py" "$@"
-

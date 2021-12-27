@@ -1,0 +1,7 @@
+{
+    "bin/elasticsearch": {
+        "group": "elasticsearch",
+        "permissions": "0755",
+        "user": "elasticsearch"
+    }
+}

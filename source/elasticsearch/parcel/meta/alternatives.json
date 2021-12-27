@@ -1,0 +1,8 @@
+{
+  "elasticsearch": {
+    "destination": "/usr/bin/elasticsearch",
+    "source": "bin/elasticsearch",
+    "priority": 10,
+    "isDirectory": false
+  }
+}
